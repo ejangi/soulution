@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import db from '../firebase.config';
 
 const useProblems = () => {
-    // eslint-disable-next-line
     const [problems, setProblems] = useState([]);
 
     useEffect(() => {
@@ -22,9 +21,4 @@ const useProblems = () => {
     return [problems];
 };
 
-const getProblem = (problemId) => {
-    console.log('Hello world ' + problemId);
-};
-
-export { getProblem };
 export default useProblems;

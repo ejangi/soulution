@@ -1,12 +1,19 @@
 import React from 'react';
-import useProblems, { getProblem } from '../models/useProblems';
+import useProblems from '../models/useProblems';
 import timeAgo from '../helpers/timeAgo';
 
 function ProblemsList() {
     const [problems] = useProblems();
 
+    const getProblem = (id) => {
+        let filtered = problems.filter(problem => problem.id === id);
+        let problem = filtered && filtered.length > 0 ? filtered[0] : null;
+        return problem;
+    }
+
     const handleClick = (e, id) => {
-        getProblem(id);
+       let problem = getProblem(id);
+       console.log(problem);
     };
 
     return(
