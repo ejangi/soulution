@@ -33,6 +33,7 @@ body {
 .problem {
   margin-bottom: $gutter;
   padding: ($gutter/2) $gutter;
+  cursor: pointer;
   @include raised;
 
   h3 {
