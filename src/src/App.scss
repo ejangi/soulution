@@ -1,4 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap');
+
+$color-white: white;
+$gradient-blue: linear-gradient(134.48deg, #0085FF 3.95%, #00B2FF 96.04%);
+
+$gutter: 30px;
+
+@mixin raised {
+  background: #FFFFFF;
+  box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+}
+
+
+
 html,
 body {
-  background-color: white;
+  margin: 0;
+  padding: 0;
+  background-color: $color-white;
+  font-family: 'Baloo 2', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.container {
+  padding: $gutter;
+}
+
+.header {
+  color: $color-white;
+  background: $gradient-blue;
+}
+
+.problem {
+  margin-bottom: $gutter;
+  padding: ($gutter/2) $gutter;
+  @include raised;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
 }
