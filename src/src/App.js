@@ -2,6 +2,7 @@ import './App.scss';
 import React from 'react';
 import useProblems from './models/useProblems';
 import ProblemsList from './components/problemsList';
+import ProblemsModal from './components/problemsModal';
 
 function App() {
   const [problems] = useProblems();
@@ -20,6 +21,7 @@ function App() {
               <ProblemsList problems={problems} />
             </div>
           </main>
+          <ProblemsModal />
       </div>
           :
       <div className="App empty">
@@ -27,7 +29,7 @@ function App() {
             <div className="container">
               <div className="flex-stack">
                 <div className="row">&nbsp;</div>
-                <div clasName="row">
+                <div className="row">
                   <h1>Welcome!</h1>
                   <p>Structured problem solving a great technique to help you step back from a problem and help your mind work towards a solution.</p>
                 </div>

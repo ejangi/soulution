@@ -2,6 +2,8 @@
 
 $color-primary: #0085FF;
 $color-white: white;
+$color-light-grey: #E5E5E5;
+$color-medium-grey: #455462;
 $gradient-blue: linear-gradient(134.48deg, #0085FF 3.95%, #00B2FF 96.04%);
 
 $gutter: 30px;
@@ -67,7 +69,7 @@ body,
 
 button,
 input[type=submit] {
-  font-size: 14pt;
+  font-size: 12pt;
   padding: ($gutter/2) $gutter;
   color: $color-white;
   background: linear-gradient(180deg, #0085FF 3.95%, #00B2FF 96.04%);
@@ -77,6 +79,12 @@ input[type=submit] {
   appearance: none;
   transition: ease-in-out .2s all;
 
+  &.btn-secondary {
+    color: $color-primary;
+    background: $color-white;
+    box-shadow: 0px 3px 8px $color-light-grey;
+  }
+
   &:hover,
   &:focus {
     transform: translateY(-2px);
@@ -85,6 +93,10 @@ input[type=submit] {
   &:active {
     transform: translateY(2px);
   }
+}
+
+.hidden {
+  display: none;
 }
 
 .header {
@@ -135,5 +147,123 @@ input[type=submit] {
 
   p {
     margin-bottom: 0;
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-content: stretch;
+  align-items: stretch;
+
+  @media (min-width: $width-sm) {
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+  }
+
+  .modal-dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-content: stretch;
+    align-items: stretch;
+    height: 100%;
+    background-color: $color-white;
+    box-shadow: 0px 3px $gutter rgba(0,0,0,0.6);
+
+    @media (min-width: $width-sm) {
+      width: 600px;
+      margin-top: $gutter;
+      margin-bottom: $gutter;
+    }
+  }
+
+  .modal-content {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: stretch;
+    align-items: stretch;
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: ($gutter/2);
+
+    @media (min-width: $width-sm) {
+      padding: $gutter;
+    }
+  }
+
+  .modal-header {
+    border-bottom: 3px solid $color-light-grey;
+  }
+
+  .modal-body {
+    height: 100%;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    border-top: 3px solid $color-light-grey;
+
+    .btn-primary {
+      margin-left: auto;
+    }
+  }
+}
+
+.step-counter {
+  display: flex;
+  justify-content: flex-end;
+
+  .step {
+    display: flex;
+    align-content: center;
+    align-items: center;
+
+    .number {
+      width: 36px;
+      height: 36px;
+      margin-right: 10px;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+      background: #FFFFFF;
+      box-shadow: 0px 3px 8px #E5E5E5;
+      border-radius: 100%;
+
+      em {
+        font-style: normal;
+      }
+    }
+
+    .label {
+      margin-right: ($gutter/2);
+      color: $color-medium-grey;
+      font-size: 14pt;
+    }
+
+    &.active {
+      margin-right: auto;
+
+      .number {
+        color: white;
+        background: linear-gradient(180deg, #0085FF 3.95%, #00B2FF 96.04%);
+        box-shadow: 0px 3px 8px rgba(0, 133, 255, 0.49);
+      }
+    }
   }
 }
