@@ -1,12 +1,9 @@
 import React from 'react';
-import useProblems from '../models/useProblems';
 import timeAgo from '../helpers/timeAgo';
 
-function ProblemsList() {
-    const [problems] = useProblems();
-
+function ProblemsList(props) {
     const getProblem = (id) => {
-        let filtered = problems.filter(problem => problem.id === id);
+        let filtered = props.problems.filter(problem => problem.id === id);
         let problem = filtered && filtered.length > 0 ? filtered[0] : null;
         return problem;
     }
@@ -19,7 +16,7 @@ function ProblemsList() {
     return(
         <div className="problems-list">
         {
-            problems && problems.map( ( problem, index ) => {
+            props.problems && props.problems.map((problem, index) => {
                 return(
                     <div className="problem" id={problem.id} key={problem.id} onClick={(e) => handleClick(e, problem.id)}>
                         <h3>{problem.Title}</h3>
