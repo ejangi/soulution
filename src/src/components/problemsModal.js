@@ -30,6 +30,7 @@ function ProblemsModal(props) {
 
     function close() {
         props.setOpenState(false);
+        setCurrentStep(1);
     }
 
     return(

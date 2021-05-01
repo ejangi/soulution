@@ -40,8 +40,6 @@ function App() {
     completeProblems = problems.filter(prob => prob.SolvedDate !== null );
   }
 
-  console.log(incompleteProblems.length);
-
   return (
     <>
     { problems.length > 0 ?
