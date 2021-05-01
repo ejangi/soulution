@@ -29,15 +29,16 @@ function ProblemsModal(props) {
     }
 
     function close() {
-
+        props.setOpenState(false);
     }
 
     return(
-        <div className="modal fade" id={name} tabindex="-1" role="dialog" aria-hidden="true">
+        <div className="modal" id={name} tabindex="-1" role="dialog" aria-hidden={!props.openState}>
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
                         <StepCounter steps={steps} currentStep={currentStep} />
+                        <button type="button" className="btn btn-close" onClick={close}>&#215;</button>
                     </div>
                     <div className="modal-body">
                         ...

@@ -1,11 +1,16 @@
 import './App.scss';
-import React from 'react';
+import React, { useState } from 'react';
 import useProblems from './models/useProblems';
 import ProblemsList from './components/problemsList';
 import ProblemsModal from './components/problemsModal';
 
 function App() {
   const [problems] = useProblems();
+  const [modal, setModal] = useState(false);
+
+  let handleModalButton = (e) => {
+    setModal(true);
+  };
 
   return (
     <>
@@ -21,7 +26,12 @@ function App() {
               <ProblemsList problems={problems} />
             </div>
           </main>
-          <ProblemsModal />
+          <footer className="footer">
+            <div className="container">
+              <button type="button" className="btn btn-pimary" onClick={handleModalButton}>Solve a new problem</button>
+            </div>
+          </footer>
+          <ProblemsModal openState={modal} setOpenState={setModal} />
       </div>
           :
       <div className="App empty">
