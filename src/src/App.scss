@@ -3,8 +3,10 @@
 $color-primary: #0085FF;
 $color-white: white;
 $color-light-grey: #E5E5E5;
-$color-medium-grey: #455462;
+$color-medium-grey: #A4AEB7;
+$color-dark-grey: #455462;
 $gradient-blue: linear-gradient(134.48deg, #0085FF 3.95%, #00B2FF 96.04%);
+$font-family: 'Baloo 2', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 $gutter: 30px;
 $width-sm: 720px;
@@ -22,7 +24,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: $color-white;
-  font-family: 'Baloo 2', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: $font-family;
 }
 
 html,
@@ -81,9 +83,14 @@ body,
   }
 }
 
+h2 {
+  margin: 0 0 $gutter/2 0;
+}
+
 button,
 input[type=submit] {
   font-size: 12pt;
+  font-family: $font-family;
   padding: ($gutter/2) $gutter;
   color: $color-white;
   background: linear-gradient(180deg, #0085FF 3.95%, #00B2FF 96.04%);
@@ -92,6 +99,7 @@ input[type=submit] {
   border-width: 0;
   appearance: none;
   cursor: pointer;
+  outline: none;
   transition: ease-in-out .2s all;
 
   &.btn-secondary {
@@ -107,6 +115,62 @@ input[type=submit] {
 
   &:active {
     transform: translateY(2px);
+  }
+}
+
+label {
+  display: block;
+  text-align: left;
+  color: $color-medium-grey;
+}
+
+input[type=text] {
+  min-width: 260px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  border-bottom: 1px solid transparent;
+  outline: none;
+  color: $color-dark-grey;
+  font-size: 16pt;
+  font-family: $font-family;
+  transition: border-bottom .2s ease-in-out;
+
+  &:focus,
+  &:active {
+    border-bottom-color: $color-medium-grey;
+  }
+}
+
+.field {
+  border: 1px solid $color-light-grey;
+  border-radius: 6px;
+  padding: $gutter/2;
+}
+
+.hint {
+  color: $color-medium-grey;
+  margin-top: $gutter/2;
+  padding: $gutter/2;
+}
+
+.text-array-input {
+  label {
+    display: flex;
+    align-items: center;
+
+    em {
+      min-width: 25px;
+      font-style: normal;
+      margin-right: 10px;
+      color: $color-dark-grey;
+      font-size: 16pt;
+
+      &::after {
+        content: '.'
+      }
+    }
   }
 }
 
@@ -229,7 +293,6 @@ input[type=submit] {
   }
 
   .modal-header,
-  .modal-body,
   .modal-footer {
     padding: ($gutter/2);
 
@@ -250,7 +313,7 @@ input[type=submit] {
     margin-right: -$gutter;
     margin-bottom: -$gutter;
     border-radius: 0;
-    color: $color-medium-grey;
+    color: $color-dark-grey;
     background: none;
     font-size: 18pt;
 
@@ -261,7 +324,23 @@ input[type=submit] {
   }
 
   .modal-body {
+    display: flex;
+    align-items: center;
     height: 100%;
+    padding: $gutter;
+
+    @media (min-width: $width-sm) {
+      padding: $gutter*2;
+    }
+
+    .step {
+      margin-left: auto;
+      margin-right: auto;
+
+      h2 {
+        text-align: center;
+      }
+    }
   }
 
   .modal-footer {
@@ -309,7 +388,7 @@ input[type=submit] {
 
     .label {
       margin-right: ($gutter/2);
-      color: $color-medium-grey;
+      color: $color-dark-grey;
     }
 
     &.active {

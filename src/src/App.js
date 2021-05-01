@@ -7,9 +7,10 @@ import ProblemsModal from './components/problemsModal';
 function App() {
   const blankProblem = {
     "Plan": [],
+    "Possibilities": [],
     "Solution": null,
     "LastUpdatedDate": null,
-    "Title": null,
+    "Title": "",
     "SolvedDate": null,
     "CreatedDate": null,
     "id": null
@@ -61,7 +62,7 @@ function App() {
               <button type="button" className="btn btn-pimary" onClick={handleModalButton}>Solve a new problem</button>
             </div>
           </footer>
-          <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} />
+          <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} />
       </div>
           :
       <div className="App empty">
@@ -73,7 +74,7 @@ function App() {
                   <h1>Welcome!</h1>
                   <p>Structured problem solving a great technique to help you step back from a problem and help your mind work towards a solution.</p>
                 </div>
-                <div className="row arrow"><div class="arrow">&nbsp;</div></div>
+                <div className="row arrow"><div className="arrow">&nbsp;</div></div>
                 <div className="row action">
                   <button>Solve your first problem</button>
                 </div>

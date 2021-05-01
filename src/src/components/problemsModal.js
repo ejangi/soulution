@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import StepCounter from '../components/stepCounter';
+import TextArrayInput from '../components/textArrayInput';
 
 function ProblemsModal(props) {
     const [currentStep, setCurrentStep] = useState(1);
+    const [problem, setProblem] = useState(props.problem);
     const name = props.name ? props.name : 'problemsModal';
 
+    useEffect(() => { setProblem(props.problem) }, [props.problem]);
+
     const steps = [
-        { number: 1, label: 'Define', html: '' },
-        { number: 2, label: 'List', html: '' },
-        { number: 3, label: 'Evaluate', html: '' },
-        { number: 4, label: 'Choose', html: '' },
-        { number: 5, label: 'Plan', html: '' },
-        { number: 6, label: 'Review', html: '' }
+        { number: 1, label: 'Define' },
+        { number: 2, label: 'List' },
+        { number: 3, label: 'Evaluate' },
+        { number: 4, label: 'Choose' },
+        { number: 5, label: 'Plan' },
+        { number: 6, label: 'Review' }
     ];
 
     function next() {
@@ -19,6 +23,7 @@ function ProblemsModal(props) {
             close();
         } else {
             setCurrentStep(currentStep + 1);
+            document.querySelector('.step .field input').focus();
         }
     }
 
@@ -33,6 +38,12 @@ function ProblemsModal(props) {
         setCurrentStep(1);
     }
 
+    function handleChange(key, value) {
+        props.problem[key] = value;
+        problem[key] = value;
+        setProblem(problem);
+    }
+
     return(
         <div className="modal" id={name} tabIndex="-1" role="dialog" aria-hidden={!props.openState}>
             <div className="modal-dialog" role="document">
@@ -43,32 +54,46 @@ function ProblemsModal(props) {
                     </div>
                     <div className="modal-body">
                         { currentStep === 1 &&
-                            <div className="define">
-                                Define: {props.problem.Title}
+                            <div className="step define">
+                                <h2>Define the problem</h2>
+                                <div className="field">
+                                    <label htmlFor="Title">The Problem</label>
+                                    <input type="text" id="Title" defaultValue={problem.Title} onChange={(e) => { handleChange('Title', e.target.value) }} />
+                                </div>
+                                <div className="hint">
+                                    The more narrowly you can define the problem, the better.
+                                </div>
                             </div>
                         }
                         { currentStep === 2 &&
-                            <div className="list">
-                                List: {props.problem.Title}
+                            <div className="step list">
+                                <h2>List all possible solutions <span className="nowrap">(even the bad ones)</span></h2>
+                                <div className="field">
+                                    <label htmlFor="Possibilities">Possible solutions</label>
+                                    <TextArrayInput id="Possibilities" key="Possibilities" value={problem.Possibilities} onChange={handleChange} />
+                                </div>
+                                <div className="hint">
+                                    Avoid evaluating the merits of each solution in this step.
+                                </div>
                             </div>
                         }
                         { currentStep === 3 &&
-                            <div className="evaluate">
-                                Evaluate: {props.problem.Title}
+                            <div className="step evaluate">
+                                Evaluate: {problem.Title}
                             </div>
                         }
                         { currentStep === 4 &&
-                            <div className="choose">
+                            <div className="step choose">
                                 Choose: {props.problem.Title}
                             </div>
                         }
                         { currentStep === 5 &&
-                            <div className="plan">
+                            <div className="step plan">
                                 Plan: {props.problem.Title}
                             </div>
                         }
                         { currentStep === 6 &&
-                            <div className="review">
+                            <div className="step review">
                                 Review: {props.problem.Title}
                             </div>
                         }
