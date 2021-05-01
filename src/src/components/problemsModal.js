@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import StepCounter from '../components/stepCounter';
 import TextArrayInput from '../components/textArrayInput';
 
 function ProblemsModal(props) {
     const [currentStep, setCurrentStep] = useState(1);
-    const [problem, setProblem] = useState(props.problem);
     const name = props.name ? props.name : 'problemsModal';
-
-    useEffect(() => { setProblem(props.problem) }, [props.problem]);
 
     const steps = [
         { number: 1, label: 'Define' },
@@ -40,8 +37,7 @@ function ProblemsModal(props) {
 
     function handleChange(key, value) {
         props.problem[key] = value;
-        problem[key] = value;
-        setProblem(problem);
+        props.setProblem(props.problem);
     }
 
     return(
@@ -58,7 +54,7 @@ function ProblemsModal(props) {
                                 <h2>Define the problem</h2>
                                 <div className="field">
                                     <label htmlFor="Title">The Problem</label>
-                                    <input type="text" id="Title" defaultValue={problem.Title} onChange={(e) => { handleChange('Title', e.target.value) }} />
+                                    <input type="text" id="Title" defaultValue={props.problem.Title} onChange={(e) => { handleChange('Title', e.target.value) }} />
                                 </div>
                                 <div className="hint">
                                     The more narrowly you can define the problem, the better.
@@ -70,7 +66,7 @@ function ProblemsModal(props) {
                                 <h2>List all possible solutions <span className="nowrap">(even the bad ones)</span></h2>
                                 <div className="field">
                                     <label htmlFor="Possibilities">Possible solutions</label>
-                                    <TextArrayInput id="Possibilities" key="Possibilities" value={problem.Possibilities} onChange={handleChange} />
+                                    <TextArrayInput id="Possibilities" key="Possibilities" value={props.problem.Possibilities} handleChange={handleChange} />
                                 </div>
                                 <div className="hint">
                                     Avoid evaluating the merits of each solution in this step.
@@ -79,7 +75,7 @@ function ProblemsModal(props) {
                         }
                         { currentStep === 3 &&
                             <div className="step evaluate">
-                                Evaluate: {problem.Title}
+                                Evaluate: {props.problem.Title}
                             </div>
                         }
                         { currentStep === 4 &&

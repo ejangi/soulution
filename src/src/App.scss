@@ -171,6 +171,12 @@ input[type=text] {
         content: '.'
       }
     }
+
+    &.text-array-input-new {
+      em {
+        color: $color-light-grey;
+      }
+    }
   }
 }
 
