@@ -2,15 +2,8 @@ import React from 'react';
 import timeAgo from '../helpers/timeAgo';
 
 function ProblemsList(props) {
-    const getProblem = (id) => {
-        let filtered = props.problems.filter(problem => problem.id === id);
-        let problem = filtered && filtered.length > 0 ? filtered[0] : null;
-        return problem;
-    }
-
     const handleClick = (e, id) => {
-       let problem = getProblem(id);
-       console.log(problem);
+       props.getProblem(id);
     };
 
     return(

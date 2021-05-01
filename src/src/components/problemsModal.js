@@ -33,15 +33,44 @@ function ProblemsModal(props) {
     }
 
     return(
-        <div className="modal" id={name} tabindex="-1" role="dialog" aria-hidden={!props.openState}>
+        <div className="modal" id={name} tabIndex="-1" role="dialog" aria-hidden={!props.openState}>
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <StepCounter steps={steps} currentStep={currentStep} />
+                        <StepCounter steps={steps} currentStep={currentStep} setStep={setCurrentStep} />
                         <button type="button" className="btn btn-close" onClick={close}>&#215;</button>
                     </div>
                     <div className="modal-body">
-                        ...
+                        { currentStep === 1 &&
+                            <div className="define">
+                                Define: {props.problem.Title}
+                            </div>
+                        }
+                        { currentStep === 2 &&
+                            <div className="list">
+                                List: {props.problem.Title}
+                            </div>
+                        }
+                        { currentStep === 3 &&
+                            <div className="evaluate">
+                                Evaluate: {props.problem.Title}
+                            </div>
+                        }
+                        { currentStep === 4 &&
+                            <div className="choose">
+                                Choose: {props.problem.Title}
+                            </div>
+                        }
+                        { currentStep === 5 &&
+                            <div className="plan">
+                                Plan: {props.problem.Title}
+                            </div>
+                        }
+                        { currentStep === 6 &&
+                            <div className="review">
+                                Review: {props.problem.Title}
+                            </div>
+                        }
                     </div>
                     <div className="modal-footer">
                         { currentStep > 1 &&

@@ -6,8 +6,8 @@ function stepCounter(props) {
     return(
         <div className="step-counter">
             {steps.map(step => (
-                <div className={step.number < props.currentStep || props.currentStep === step.number ? 'step active' : 'step'}>
-                    <div className="number"><em>{step.number}</em></div>
+                <div key={step.number} className={step.number < props.currentStep || props.currentStep === step.number ? 'step active' : 'step'}>
+                    <div className="number" onClick={(e) => { props.setStep(step.number)}}><em>{step.number}</em></div>
                     <div className={props.currentStep === step.number ? 'label' : 'label hidden'}>{step.label}</div>
                 </div>
             ))}

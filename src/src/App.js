@@ -5,25 +5,57 @@ import ProblemsList from './components/problemsList';
 import ProblemsModal from './components/problemsModal';
 
 function App() {
-  const [problems] = useProblems();
-  const [modal, setModal] = useState(false);
+  const blankProblem = {
+    "Plan": [],
+    "Solution": null,
+    "LastUpdatedDate": null,
+    "Title": null,
+    "SolvedDate": null,
+    "CreatedDate": null,
+    "id": null
+  };
 
-  let handleModalButton = (e) => {
+  const [modal, setModal] = useState(false);
+  const [problems] = useProblems();
+  const [problem, setProblem] = useState(blankProblem);
+
+  const getProblem = (id) => {
+    let filtered = problems.filter(p => p.id === id);
+    let prob = filtered && filtered.length > 0 ? filtered[0] : null;
+    setProblem(prob);
+    setModal(true);
+    return prob;
+  }
+
+  const handleModalButton = (e) => {
+    setProblem(blankProblem);
     setModal(true);
   };
+
+  let incompleteProblems = [];
+  let completeProblems = [];
+
+  if (problems.length > 0) {
+    incompleteProblems = problems.filter(prob => prob.SolvedDate === null );
+    completeProblems = problems.filter(prob => prob.SolvedDate !== null );
+  }
+
+  console.log(incompleteProblems.length);
 
   return (
     <>
     { problems.length > 0 ?
       <div className="App">
+          { incompleteProblems.length > 0 &&
           <header className="header">
             <div className="container">
-              ...
+              <ProblemsList problems={incompleteProblems} getProblem={getProblem} />
             </div>
-          </header>  
+          </header>
+          }  
           <main>
             <div className="container">
-              <ProblemsList problems={problems} />
+              <ProblemsList problems={completeProblems} getProblem={getProblem} />
             </div>
           </main>
           <footer className="footer">
@@ -31,7 +63,7 @@ function App() {
               <button type="button" className="btn btn-pimary" onClick={handleModalButton}>Solve a new problem</button>
             </div>
           </footer>
-          <ProblemsModal openState={modal} setOpenState={setModal} />
+          <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} />
       </div>
           :
       <div className="App empty">
