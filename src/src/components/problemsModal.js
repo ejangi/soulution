@@ -19,14 +19,14 @@ function ProblemsModal(props) {
         if (currentStep === steps[steps.length-1].number) {
             close();
         } else {
-            setCurrentStep(currentStep + 1);
+            setCurrentStep(currentStep => currentStep + 1);
             document.querySelector('.step .field input').focus();
         }
     }
 
     function prev() {
         if (currentStep > 1) {
-            setCurrentStep(currentStep - 1);
+            setCurrentStep(currentStep => currentStep - 1);
         }
     }
 
@@ -36,8 +36,10 @@ function ProblemsModal(props) {
     }
 
     function handleChange(key, value) {
-        props.problem[key] = value;
-        props.setProblem(props.problem);
+        props.setProblem(problem => {
+            problem[key] = value;
+            return problem;
+        });
     }
 
     return(
@@ -65,7 +67,7 @@ function ProblemsModal(props) {
                             <div className="step list">
                                 <h2>List all possible solutions <span className="nowrap">(even the bad ones)</span></h2>
                                 <div className="field">
-                                    <label htmlFor="Possibilities">Possible solutions</label>
+                                    <label htmlFor="Solutions">Possible solutions</label>
                                     <TextArrayInput id="Possibilities" key="Possibilities" value={props.problem.Possibilities} handleChange={handleChange} />
                                 </div>
                                 <div className="hint">
@@ -75,7 +77,15 @@ function ProblemsModal(props) {
                         }
                         { currentStep === 3 &&
                             <div className="step evaluate">
-                                Evaluate: {props.problem.Title}
+                                { props.problem.Solutions.map((possibility, i) => {
+                                    return <div key={i} class="possibility">
+                                        <h2>{possibility}</h2>
+                                        <div className="field">
+                                            <label htmlFor="Pros{i}">Pros</label>
+                                            <TextArrayInput id="Pros{i}" key="Pros{i}" value={possibility.Pros} handleChange={handleChange} />
+                                        </div>
+                                    </div>
+                                })}
                             </div>
                         }
                         { currentStep === 4 &&

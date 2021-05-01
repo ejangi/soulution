@@ -21,6 +21,7 @@ const useProblem = (id) => {
                 let d = doc.data();
                 d.id = doc.id;
                 setProblem(d);
+                console.log(d);
             } else {
                 console.error('Problem does not exist')
             }
