@@ -30,7 +30,7 @@ function App() {
   }
 
   const handleModalButton = (e) => {
-    setProblem(blankProblem);
+    setProblem(problem => blankProblem);
     setModal(true);
   };
 
@@ -77,11 +77,12 @@ function App() {
                 </div>
                 <div className="row arrow"><div className="arrow">&nbsp;</div></div>
                 <div className="row action">
-                  <button>Solve your first problem</button>
+                  <button onClick={handleModalButton}>Solve your first problem</button>
                 </div>
               </div>              
             </div>
           </main>
+          <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} />
       </div>
     }
     </>
