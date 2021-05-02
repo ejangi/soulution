@@ -19,6 +19,10 @@ $width-sm: 720px;
 
 
 
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
@@ -332,9 +336,12 @@ input[type=text] {
 
   .modal-body {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     height: 100%;
     padding: $gutter;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 
     @media (min-width: $width-sm) {
       padding: $gutter*2;

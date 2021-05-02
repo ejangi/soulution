@@ -1,6 +1,7 @@
 import './App.scss';
 import React, { useState, useEffect } from 'react';
 import ProblemCollection from './state/problemModel';
+import SolutionCollection from './state/solutionModel';
 import ProblemsList from './components/problemsList';
 import ProblemsModal from './components/problemsModal';
 
@@ -26,8 +27,9 @@ function App() {
     let prob = filtered && filtered.length > 0 ? filtered[0] : null;
     setProblem(prob);
     setModal(true);
-    ProblemCollection.getCurrentSolutions(id)
+    SolutionCollection.getAllSolutions(id)
       .then(solutions => {
+        console.log(solutions);
         setProblem(problem => {
           problem.solutions = solutions;
           return problem;

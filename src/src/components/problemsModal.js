@@ -20,7 +20,10 @@ function ProblemsModal(props) {
             close();
         } else {
             setCurrentStep(currentStep => currentStep + 1);
-            document.querySelector('.step .field input').focus();
+            let input = document.querySelector('.step .field input');
+            if (input) {
+                input.focus();
+            }
         }
     }
 
