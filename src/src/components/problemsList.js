@@ -9,11 +9,11 @@ function ProblemsList(props) {
     return(
         <div className="problems-list">
         {
-            props.problems && props.problems.map((problem, index) => {
+            props.problems && props.problems.map((problem) => {
                 return(
                     <div className="problem" id={problem.id} key={problem.id} onClick={(e) => handleClick(e, problem.id)}>
                         <h3>{problem.Title}</h3>
-                        <p>{timeAgo(problem.LastUpdatedDate.seconds * 1000)}</p>
+                        <p>{timeAgo(problem.LastUpdatedDate?.seconds * 1000)}</p>
                     </div>
                 )
             })

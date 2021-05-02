@@ -23,17 +23,18 @@ function TextArrayInput(props) {
                 props.handleChange(props.id, updatedValue);
                 setArrayCount(count => count + 1);
                 e.target.value = "";
+                e.target.focus();
             } else if(elementRefs.current.length > e.target.tabIndex) {
                 elementRefs.current[e.target.tabIndex].current.focus();
             }
         }
 
-        if (e.key === 'ArrowDown' && elementRefs.current.length >= (e.target.tabIndex + 1)) {
-            elementRefs.current[e.target.tabIndex].current.focus();
+        if (e.key === 'ArrowUp' && (e.target.tabIndex - 2) >= 0) {
+            elementRefs.current[e.target.tabIndex - 2].current.focus();
         }
 
-        if (e.key === 'ArrowUp' && (e.target.tabIndex - 1) > 0) {
-            elementRefs.current[e.target.tabIndex - 2].current.focus();
+        if (e.key === 'ArrowDown' && elementRefs.current.length >= (e.target.tabIndex + 1)) {
+            elementRefs.current[e.target.tabIndex].current.focus();
         }
     }
 

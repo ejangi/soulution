@@ -1,36 +1,36 @@
 import './App.scss';
-import React, { useState } from 'react';
-import useProblems from './models/useProblems';
+import React, { useState, useEffect } from 'react';
+import ProblemCollection from './state/problemModel';
 import ProblemsList from './components/problemsList';
 import ProblemsModal from './components/problemsModal';
 
 function App() {
-  const blankProblem = {
-    "Plan": [],
-    "Possibilities": [],
-    "Solution": null,
-    "LastUpdatedDate": null,
-    "Title": "",
-    "SolvedDate": null,
-    "CreatedDate": null,
-    "id": null
-  };
-
   const [modal, setModal] = useState(false);
-  const [problems] = useProblems();
-  const [problem, setProblem] = useState(blankProblem);
+  const [problems, setProblems] = useState([]);
+  const [problem, setProblem] = useState(ProblemCollection.blankProblem());
+
+  useEffect(() => {
+    (async () => {
+       try {
+         const data = await ProblemCollection.getAllProblems();
+         await setProblems(prev => (data));
+       } catch (error) {
+          console.error(error);
+       }
+    })();
+  }, []);
+
 
   const getProblem = (id) => {
     let filtered = problems.filter(p => p.id === id);
     let prob = filtered && filtered.length > 0 ? filtered[0] : null;
     setProblem(prob);
     setModal(true);
-    console.log(prob);
     return prob;
   }
 
   const handleModalButton = (e) => {
-    setProblem(problem => blankProblem);
+    setProblem(problem => ProblemCollection.blankProblem());
     setModal(true);
   };
 
