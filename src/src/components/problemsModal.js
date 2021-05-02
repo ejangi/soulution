@@ -77,12 +77,17 @@ function ProblemsModal(props) {
                         }
                         { currentStep === 3 &&
                             <div className="step evaluate">
-                                { props.problem.Solutions.map((possibility, i) => {
-                                    return <div key={i} class="possibility">
-                                        <h2>{possibility}</h2>
-                                        <div className="field">
+                                { props.problem.solutions.map((solution, i) => {
+                                    return <div key={i} className="solution">
+                                        <h2>{solution.Title}</h2>
+                                        <div className="field pros">
                                             <label htmlFor="Pros{i}">Pros</label>
-                                            <TextArrayInput id="Pros{i}" key="Pros{i}" value={possibility.Pros} handleChange={handleChange} />
+                                            <TextArrayInput id="Pros{i}" key="Pros{i}" value={solution.Pros} handleChange={handleChange} />
+                                        </div>
+
+                                        <div className="field cons">
+                                            <label htmlFor="Cons{i}">Cons</label>
+                                            <TextArrayInput id="Cons{i}" key="Cons{i}" value={solution.Cons} handleChange={handleChange} />
                                         </div>
                                     </div>
                                 })}

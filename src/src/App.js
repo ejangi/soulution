@@ -26,6 +26,13 @@ function App() {
     let prob = filtered && filtered.length > 0 ? filtered[0] : null;
     setProblem(prob);
     setModal(true);
+    ProblemCollection.getCurrentSolutions(id)
+      .then(solutions => {
+        setProblem(problem => {
+          problem.solutions = solutions;
+          return problem;
+        })
+      });
     return prob;
   }
 

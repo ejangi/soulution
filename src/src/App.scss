@@ -146,6 +146,7 @@ input[type=text] {
 .field {
   border: 1px solid $color-light-grey;
   border-radius: 6px;
+  margin: 0 0 $gutter 0;
   padding: $gutter/2;
 }
 

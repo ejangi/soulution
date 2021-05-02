@@ -31,7 +31,9 @@ class ProblemModel extends FirestoreModel {
     }
 
     async getAllProblems() {
-      const problemCollection = await this.store.collection(this.collection).get();
+      const problemCollection = await this.store
+            .collection(this.collection)
+            .get();
       return problemCollection.docs.map(problem => ({ ...problem.data(), id: problem.id }));
     }
 
