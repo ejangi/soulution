@@ -10,20 +10,31 @@ function TextArrayInput(props) {
         return props.id + i;
     }
 
+    function gatherValues() {
+        let values = [];
+        [...Array(props.value.length).keys()].forEach(i => {
+            if (getRef(toKey(i)) && getRef(toKey(i)).current.lastChild.value.length > 0) {
+                values.push(getRef(toKey(i)).current.lastChild.value);
+            }
+        });
+
+        if (getRef(toKey('New')) && getRef(toKey('New')).current.lastChild.value.length > 0) {
+            values.push(getRef(toKey('New')).current.lastChild.value);
+        }
+
+        return values;
+    }
+
     function commit(e) {
         let targetValue = e.target.value.trim();
         if (targetValue.length === 0) {
             return false;
         }
-        let updatedValue = props.value;
-        updatedValue.push(targetValue);
-        
-        if (e.target.className === 'text-array-input-new') {    
-            setArrayCount(count => count + 1);
-            e.target.value = "";
-        }
 
-        props.handleChange(props.id, updatedValue);
+        let values = gatherValues();
+        if (values !== props.value) {
+            props.handleChange(props.id, values);
+        }
     }
 
     function onKeyUp(e) {
@@ -32,9 +43,18 @@ function TextArrayInput(props) {
 
             if (e.target.className === 'text-array-input-new') {
                 commit(e);
+                setArrayCount(count => count + 1);
+                e.target.value = "";
                 e.target.focus();
             } else if(getRef(toKey(e.target.tabIndex))) {
                 getRef(toKey(e.target.tabIndex)).current.focus();
+            }
+        }
+
+        if (e.key === 'Backspace' && e.target.value.trim().length === 0) {
+            commit(e);
+            if (e.target.tabIndex > 1 && getRef(toKey(e.target.tabIndex - 2))) {
+                getRef(toKey(e.target.tabIndex - 2)).current.focus();
             }
         }
 
@@ -43,7 +63,7 @@ function TextArrayInput(props) {
         }
 
         if (e.key === 'ArrowDown') {
-            if (getRef(toKey(e.target.tabIndex))) {
+            if (getRef(toKey(e.target.tabIndex)) && getRef(toKey(e.target.tabIndex)).current) {
                 getRef(toKey(e.target.tabIndex)).current.focus();
             } else {
                 getRef(toKey('New')).current.focus();
@@ -52,7 +72,11 @@ function TextArrayInput(props) {
     }
 
     function onChange(e) {
-        commit(e);
+        if ((e.target.className === 'text-array-input-new' 
+            && e.target.value.trim().length > 0) 
+            || e.target.className !== 'text-array-input-new') {
+            commit(e);
+        }
     }
 
     return(
