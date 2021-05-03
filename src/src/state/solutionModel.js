@@ -43,7 +43,27 @@ class SolutionModel extends FirestoreModel {
             .collection(this.solutionCollection)
             .get();
         return solutionCollection.docs.map(solution => ({ ...solution.data(), id: solution.id }));
-      }
+    }
+
+    async saveCurrentSolution(solution) {
+        let currentSolutionDocument;
+
+        if (solution.id) {
+            let s = solution;
+            delete s.id;
+
+            currentSolutionDocument = await this.store
+                .collection(this.solutionCollection)
+                .doc(solution.id)
+                .update(s);
+        } else {
+            currentSolutionDocument = await this.store
+                .collection(this.solutionCollection)
+                .add(solution);
+        }
+
+        return { ...currentSolutionDocument.data(), id: currentSolutionDocument.id };
+    }
 }
 
 export default new SolutionModel();

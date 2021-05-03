@@ -29,6 +29,26 @@ class ProblemModel extends FirestoreModel {
             .get();
       return problemCollection.docs.map(problem => ({ ...problem.data(), id: problem.id }));
     }
+
+    async saveCurrentProblem(problem) {
+        let currentProblemDocument;
+
+        if (problem.id) {
+            let p = problem;
+            delete p.id;
+
+            currentProblemDocument = await this.store
+                .collection(this.problemCollection)
+                .doc(problem.id)
+                .update(p);
+        } else {
+            currentProblemDocument = await this.store
+                .collection(this.problemCollection)
+                .add(problem);
+        }
+
+        return { ...currentProblemDocument.data(), id: currentProblemDocument.id };
+    }
 }
 
 export default new ProblemModel();
