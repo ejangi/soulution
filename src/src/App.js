@@ -21,7 +21,6 @@ function App() {
     })();
   }, []);
 
-
   const getProblem = (id) => {
     let filtered = problems.filter(p => p.id === id);
     let prob = filtered && filtered.length > 0 ? filtered[0] : null;

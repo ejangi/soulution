@@ -12,6 +12,20 @@ class SolutionModel extends FirestoreModel {
           };
     }
 
+    syncSolutionsPossibilities(problem) {
+        let solutionArray = problem.solutions.map(solution => solution.Title);
+        problem.solutions = problem.Possibilities.map(possibility => {
+            if (!solutionArray.includes(possibility)) {
+                let solution = this.blankSolution();
+                solution.Title = possibility;
+                return solution;
+            } else {
+                return problem.solutions.filter(solution => solution.Title === possibility)[0];
+            }
+        });
+        return problem;
+    }
+
     async getCurrentSolution(problemId, solutionId) {
         const currentSolutionDocument = await this.store
             .collection(this.problemCollection)
