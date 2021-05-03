@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import SolutionCollection from '../state/solutionModel';
 import StepCounter from '../components/stepCounter';
 import TextArrayInput from '../components/textArrayInput';
 
@@ -40,18 +39,7 @@ function ProblemsModal(props) {
     }
 
     function handleChange(key, value) {
-        if (key === 'Possibilities') {
-            props.setProblem(problem => {
-                problem[key] = value;
-                problem = SolutionCollection.syncSolutionsPossibilities(problem);
-                return problem;
-            });
-        } else {
-            props.setProblem(problem => {
-                problem[key] = value;
-                return problem;
-            });
-        }
+        props.onChange(key, value);
     }
 
     return(

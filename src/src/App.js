@@ -28,7 +28,6 @@ function App() {
     setModal(true);
     SolutionCollection.getAllSolutions(id)
       .then(solutions => {
-        console.log(solutions);
         setProblem(problem => {
           problem.solutions = solutions;
           return problem;
@@ -36,6 +35,21 @@ function App() {
       });
     return prob;
   }
+
+  const onChange = (key, value) => {
+    if (key === 'Possibilities') {
+        setProblem(problem => {
+            problem[key] = value;
+            problem = SolutionCollection.syncSolutionsPossibilities(problem);
+            return problem;
+        });
+    } else {
+        setProblem(problem => {
+            problem[key] = value;
+            return problem;
+        });
+    }
+  };
 
   const handleModalButton = (e) => {
     setProblem(problem => ProblemCollection.blankProblem());
@@ -71,7 +85,7 @@ function App() {
               <button type="button" className="btn btn-pimary" onClick={handleModalButton}>Solve a new problem</button>
             </div>
           </footer>
-          <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} />
+          <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} onChange={onChange} />
       </div>
           :
       <div className="App empty">
