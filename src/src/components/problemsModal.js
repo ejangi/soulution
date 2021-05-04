@@ -20,16 +20,14 @@ function ProblemsModal(props) {
             close();
         } else {
             setCurrentStep(currentStep => currentStep + 1);
-            let input = document.querySelector('.step .field input');
-            if (input) {
-                input.focus();
-            }
+            props.onStepChange(currentStep);
         }
     }
 
     function prev() {
         if (currentStep > 1) {
             setCurrentStep(currentStep => currentStep - 1);
+            props.onStepChange(currentStep);
         }
     }
 
@@ -68,7 +66,7 @@ function ProblemsModal(props) {
                                 <h2>List all possible solutions <span className="nowrap">(even the bad ones)</span></h2>
                                 <div className="field">
                                     <label htmlFor="Solutions">Possible solutions</label>
-                                    <TextArrayInput id="Possibilities" key="Possibilities" value={props.problem.Possibilities} handleChange={handleChange} />
+                                    <TextArrayInput id="Solutions" key="Solutions" value={props.problem.Solutions ? props.problem.Solutions.map(solution => solution.Title) : []} handleChange={handleChange} />
                                 </div>
                                 <div className="hint">
                                     Avoid evaluating the merits of each solution in this step.
@@ -77,17 +75,17 @@ function ProblemsModal(props) {
                         }
                         { currentStep === 3 &&
                             <div className="step evaluate">
-                                { props.problem.solutions.map((solution, i) => {
+                                { props.problem.Solutions.map((solution, i) => {
                                     return <div key={i} className="solution">
                                         <h2>{solution.Title}</h2>
                                         <div className="field pros">
-                                            <label htmlFor="Pros{i}">Pros</label>
-                                            <TextArrayInput id="Pros{i}" key="Pros{i}" value={solution.Pros} handleChange={handleChange} />
+                                            <label htmlFor={`Pros[${i}]`}>Pros</label>
+                                            <TextArrayInput id={`Solutions[${i}].Pros`} key={`Solutions[${i}].Pros`} value={solution.Pros} handleChange={handleChange} />
                                         </div>
 
                                         <div className="field cons">
-                                            <label htmlFor="Cons{i}">Cons</label>
-                                            <TextArrayInput id="Cons{i}" key="Cons{i}" value={solution.Cons} handleChange={handleChange} />
+                                            <label htmlFor={`Solutions[${i}].Cons`}>Cons</label>
+                                            <TextArrayInput id={`Solutions[${i}].Cons`} key={`Solutions[${i}].Cons`} value={solution.Cons} handleChange={handleChange} />
                                         </div>
                                     </div>
                                 })}

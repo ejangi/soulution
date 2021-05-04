@@ -1,7 +1,6 @@
 import './App.scss';
 import React, { useState, useEffect } from 'react';
 import ProblemCollection from './state/problemModel';
-import SolutionCollection from './state/solutionModel';
 import ProblemsList from './components/problemsList';
 import ProblemsModal from './components/problemsModal';
 
@@ -26,28 +25,53 @@ function App() {
     let prob = filtered && filtered.length > 0 ? filtered[0] : null;
     setProblem(prob);
     setModal(true);
-    SolutionCollection.getAllSolutions(id)
-      .then(solutions => {
-        setProblem(problem => {
-          problem.solutions = solutions;
-          return problem;
-        })
-      });
     return prob;
   }
 
   const onChange = (key, value) => {
-    if (key === 'Possibilities') {
+    if (key === 'Solutions') {
         setProblem(problem => {
-            problem[key] = value;
-            problem = SolutionCollection.syncSolutionsPossibilities(problem);
+            for(let i = 0; i < problem[key].length; i++) {
+              if (problem[key][i] && !value.includes(problem[key][i].Title)) {
+                delete problem[key][i];
+              }
+            }
+            let currentSolutions = problem[key].map(solution => solution.Title);
+            value.forEach(solution => {
+              if (!currentSolutions.includes(solution)) {
+                let newSolution = ProblemCollection.blankSolution();
+                newSolution.Title = solution;
+                newSolution.CreatedDate = ProblemCollection.dateToTimestamp(new Date());
+                problem[key].push(newSolution);
+              }
+            });
             return problem;
         });
+    } else if(key.includes('[') && key.includes('.')) {
+      let parts = key.split(/\.|\[/).map(part => part.replace(/]$/, ''));
+      if (parts.length === 3) {
+        let key1 = parts[0],
+            key2 = parts[1],
+            key3 = parts[2];
+        setProblem(problem => {
+            problem[key1][key2][key3] = value;
+            return problem;
+        });
+      }
     } else {
         setProblem(problem => {
             problem[key] = value;
             return problem;
         });
+    }
+  };
+
+  const onStepChange = async (step) => {
+    try {
+      let savedProblem = await ProblemCollection.saveCurrentProblem(problem);
+      setProblem(problem => savedProblem);
+    } catch(err) {
+      console.error(err);
     }
   };
 
@@ -85,7 +109,7 @@ function App() {
               <button type="button" className="btn btn-pimary" onClick={handleModalButton}>Solve a new problem</button>
             </div>
           </footer>
-          <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} onChange={onChange} />
+          <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} onChange={onChange} onStepChange={onStepChange} />
       </div>
           :
       <div className="App empty">

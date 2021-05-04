@@ -243,11 +243,14 @@ input[type=text] {
   @include raised;
 
   h3 {
+    color: $color-dark-grey;
     margin-top: 0;
   }
 
   p {
+    color: $color-dark-grey;
     margin-bottom: 0;
+    font-size: 8pt;
   }
 }
 
@@ -425,4 +428,8 @@ input[type=text] {
       }
     }
   }
+}
+
+.nowrap {
+  white-space: nowrap;
 }

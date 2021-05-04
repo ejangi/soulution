@@ -84,7 +84,7 @@ function TextArrayInput(props) {
             { props.value.map((val, i) => {
                 return <label ref={setRef(toKey(i))} key={toKey(i+1)}><em>{(i+1)}</em><input type="text" defaultValue={val} onBlur={onChange} onKeyUp={onKeyUp} tabIndex={(i+1)} /></label>
             }) }
-            <label ref={setRef(toKey('New'))} key={toKey(props.value.length+1)} className="text-array-input-new"><em>{(props.value.length+1)}</em><input className="text-array-input-new" type="text" onChange={onChange} onKeyUp={onKeyUp} tabIndex={(props.value.length+1)} /></label>
+            <label ref={setRef(toKey('New'))} key={toKey(props.value.length+1)} className="text-array-input-new"><em>{(props.value.length+1)}</em><input className="text-array-input-new" type="text" onBlur={onChange} onKeyUp={onKeyUp} tabIndex={(props.value.length+1)} /></label>
         </div>
     );
 }
