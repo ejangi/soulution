@@ -42,6 +42,10 @@ class ProblemModel extends FirestoreModel {
             throw new Error('Trying to save an undefined problem');
         }
 
+        if (problem.Solution && !problem.SolvedDate) {
+            problem.SolvedDate = this.dateToTimestamp(new Date());
+        }
+
         if (problem.id) {
             // Make sure we got a copy and not a reference of the original
             let p = JSON.parse( JSON.stringify(problem) );
