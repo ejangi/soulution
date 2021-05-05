@@ -18,9 +18,7 @@ class ProblemModel extends FirestoreModel {
         return {
             "Title": null,
             "Cons": [],
-            "Pros": [],
-            "LastUpdatedDate": null,
-            "CreatedDate": null
+            "Pros": []
           };
     }
 
