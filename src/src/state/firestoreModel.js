@@ -8,7 +8,7 @@ export default class FirestoreModel {
     }
 
     dateToTimestamp(d) {
-        firebase.firestore.Timestamp.fromDate(d);
+        return firebase.firestore.Timestamp.fromDate(d);
     }
 
     get problemCollection() {
