@@ -33,6 +33,7 @@ class ProblemModel extends FirestoreModel {
     async getAllProblems() {
       const problemCollection = await this.store
             .collection(this.problemCollection)
+            .orderBy('LastUpdatedDate', 'desc')
             .get();
       return problemCollection.docs.map(problem => ({ ...problem.data(), id: problem.id }));
     }
