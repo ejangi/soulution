@@ -66,7 +66,7 @@ function ProblemsModal(props) {
                                 <h2>List all possible solutions <span className="nowrap">(even the bad ones)</span></h2>
                                 <div className="field">
                                     <label htmlFor="Solutions">Possible solutions</label>
-                                    <TextArrayInput id="Solutions" key="Solutions" value={props.problem.Solutions ? props.problem.Solutions.map(solution => solution.Title) : []} handleChange={handleChange} />
+                                    <TextArrayInput id="Solutions" key="Solutions" value={props.problem?.Solutions ? props.problem.Solutions.map(solution => solution.Title) : []} handleChange={handleChange} />
                                 </div>
                                 <div className="hint">
                                     Avoid evaluating the merits of each solution in this step.

@@ -6,7 +6,7 @@ class ProblemModel extends FirestoreModel {
             "id": null,
             "Plan": [],
             "Solution": null,
-            "solutions": [],
+            "Solutions": [],
             "LastUpdatedDate": null,
             "Title": "",
             "SolvedDate": null,
