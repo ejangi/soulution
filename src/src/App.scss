@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap');
 
 $color-primary: #0085FF;
+$color-light-blue: #ebf6ff;
 $color-white: white;
 $color-light-grey: #E5E5E5;
 $color-medium-grey: #A4AEB7;
@@ -144,6 +145,38 @@ input[type=text] {
   &:focus,
   &:active {
     border-bottom-color: $color-medium-grey;
+  }
+}
+
+label.radio {
+  margin-bottom: $gutter;
+  padding: $gutter/2;
+  color: $color-dark-grey;
+  font-size: 14pt;
+  background: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  box-sizing: border-box;
+  border-radius: 6px;
+  transition: all .2s ease-in-out;
+
+  &:hover,
+  &:active,
+  &:focus {
+    border-color: $color-medium-grey;
+  }
+
+  &.active {
+    background-color: $color-light-blue;
+    border-color: $color-primary;
+  }
+
+  .label {
+    margin-left: $gutter/2;
+  }
+
+  input[type=radio] {
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -432,4 +465,20 @@ input[type=text] {
 
 .nowrap {
   white-space: nowrap;
+}
+
+.step.review {
+  h3 {
+    font-weight: normal;
+    font-size: 18pt;
+    text-align: left;
+    color: $color-dark-grey;
+  }
+
+  ol {
+    font-size: 14pt;
+    text-align: left;
+    color: $color-dark-grey;
+    padding-left: $gutter;
+  }
 }

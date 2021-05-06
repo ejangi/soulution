@@ -40,6 +40,14 @@ function ProblemsModal(props) {
         props.onChange(key, value);
     }
 
+    function handleChooseSolution(e) {
+        if (e.target.parentNode && e.target.parentNode.tagName === 'LABEL') {
+            document.querySelectorAll(`#${e.target.id}`).forEach(el => el.parentNode.classList.remove('active'));
+            e.target.parentNode.classList.add('active');
+            handleChange(e.target.id, e.target.value);
+        }
+    }
+
     return(
         <div className="modal" id={name} tabIndex="-1" role="dialog" aria-hidden={!props.openState}>
             <div className="modal-dialog" role="document">
@@ -93,17 +101,33 @@ function ProblemsModal(props) {
                         }
                         { currentStep === 4 &&
                             <div className="step choose">
-                                Choose: {props.problem.Title}
+                                <h2>Choose the best or most practical solution</h2>
+                                { props.problem.Solutions.map((solution, i) => {
+                                    return <label key={`Choose[${i}]`} className={props.problem.Solution && props.problem.Solution === solution ? 'radio active' : 'radio'} tabIndex={i}>
+                                        <input type="radio" id="Solution" name="Solution" value={solution.Title} onChange={handleChooseSolution} />
+                                        <span className="label">{solution.Title}</span>
+                                    </label>
+                                })}
                             </div>
                         }
                         { currentStep === 5 &&
                             <div className="step plan">
-                                Plan: {props.problem.Title}
+                                <h2>Plan how you will carry out the best solution</h2>
+                                <div className="field">
+                                    <label htmlFor="Plan">The Plan</label>
+                                    <TextArrayInput id="Plan" key="Plan" value={props.problem?.Plan} handleChange={handleChange} />
+                                </div>
                             </div>
                         }
                         { currentStep === 6 &&
                             <div className="step review">
-                                Review: {props.problem.Title}
+                                <h2>Review your solution</h2>
+                                <h3>{props.problem.Solution}</h3>
+                                <ol>
+                                    {props.problem?.Plan.map((item, i) => {
+                                        return <li key={i}>{item}</li>
+                                    })}
+                                </ol>
                             </div>
                         }
                     </div>
