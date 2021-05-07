@@ -3,11 +3,36 @@ import React, { useState, useEffect } from 'react';
 import ProblemCollection from './state/problemModel';
 import ProblemsList from './components/problemsList';
 import ProblemsModal from './components/problemsModal';
+import firebase from 'firebase';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import LogoInversed from './Logo-Inversed.svg';
 
 function App() {
   const [modal, setModal] = useState(false);
   const [problems, setProblems] = useState([]);
   const [problem, setProblem] = useState(ProblemCollection.blankProblem());
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  const uiConfig = {
+      // Popup signin flow rather than redirect flow.
+      signInFlow: 'popup',
+      // We will display Google auth provider.
+      signInOptions: [
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID
+      ],
+      callbacks: {
+        // Avoid redirects after sign-in.
+        signInSuccessWithAuthResult: () => false,
+      },
+  };
+
+  // Listen to the Firebase Auth state and set the local state.
+  useEffect(() => {
+    const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+      setIsSignedIn(!!user);
+    });
+    return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -90,46 +115,62 @@ function App() {
 
   return (
     <>
-    { problems.length > 0 ?
-      <div className="App">
-          { incompleteProblems.length > 0 &&
-          <header className="header">
-            <div className="container">
-              <ProblemsList problems={incompleteProblems} getProblem={getProblem} />
-            </div>
-          </header>
-          }  
-          <main>
-            <div className="container">
-              <ProblemsList problems={completeProblems} getProblem={getProblem} />
-            </div>
-          </main>
-          <footer className="footer">
-            <div className="container">
-              <button type="button" className="btn btn-pimary" onClick={handleModalButton}>Solve a new problem</button>
-            </div>
-          </footer>
-          <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} onChange={onChange} onStepChange={onStepChange} />
+    { !isSignedIn ?
+      <div className="App loggedout">
+        <header className="header">
+          <div className="container">
+            <img src={LogoInversed} alt="Soulution" className="logo" />
+            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+          </div>
+        </header>
       </div>
-          :
-      <div className="App empty">
-          <main>
-            <div className="container">
-              <div className="flex-stack">
-                <div className="row">&nbsp;</div>
-                <div className="row">
-                  <h1>Welcome!</h1>
-                  <p>Structured problem solving a great technique to help you step back from a problem and help your mind work towards a solution.</p>
-                </div>
-                <div className="row arrow"><div className="arrow">&nbsp;</div></div>
-                <div className="row action">
-                  <button onClick={handleModalButton}>Solve your first problem</button>
-                </div>
-              </div>              
-            </div>
-          </main>
-          <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} />
-      </div>
+      :
+      <>
+      { problems.length > 0 ?
+        <div className="App">
+            <header className="header">
+              <div className="container">
+                <p><button className="btn btn-secondary" onClick={() => firebase.auth().signOut()}>Logout</button></p>
+                { incompleteProblems.length > 0 &&
+                  <ProblemsList problems={incompleteProblems} getProblem={getProblem} />
+                } 
+              </div>
+            </header>
+             
+            <main>
+              <div className="container">
+                <ProblemsList problems={completeProblems} getProblem={getProblem} />
+              </div>
+            </main>
+            <footer className="footer">
+              <div className="container">
+                <button type="button" className="btn btn-pimary" onClick={handleModalButton}>Solve a new problem</button>
+              </div>
+            </footer>
+            <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} onChange={onChange} onStepChange={onStepChange} />
+        </div>
+            :
+        <div className="App empty">
+            <main>
+              <div className="container">
+                <div className="flex-stack">
+                <p><button className="btn btn-secondary" onClick={() => firebase.auth().signOut()}>Logout</button></p>
+                  <div className="row">&nbsp;</div>
+                  <div className="row">
+                    <h1>Welcome!</h1>
+                    <p>Structured problem solving a great technique to help you step back from a problem and help your mind work towards a solution.</p>
+                  </div>
+                  <div className="row arrow"><div className="arrow">&nbsp;</div></div>
+                  <div className="row action">
+                    <button onClick={handleModalButton}>Solve your first problem</button>
+                  </div>
+                </div>              
+              </div>
+            </main>
+            <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} />
+        </div>
+      }
+      </>
     }
     </>
   );
