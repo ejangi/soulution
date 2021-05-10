@@ -7,6 +7,12 @@ services:
             - ./src:/app
         environment:
             PORT: 3000
+            API_KEY: apiKey
+            AUTH_DOMAIN: authDomain
+            PROJECT_ID: projectId
+            STORAGE_BUCKET: storageBucket
+            MESSAGE_SENDER_ID: messageSenderId
+            APP_ID: appId
         ports:
             - 3000:3000
         stdin_open: true
