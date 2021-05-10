@@ -2,12 +2,15 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   id: Build
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/soulution', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  id: Run
+  args: ['run', '--volume', 'build:/app/build', '--rm', 'gcr.io/$PROJECT_ID/soulution']
   volumes:
   - name: 'build'
     path: '/app/build'
 - name: 'gcr.io/cloud-builders/gsutil'
   id: Deploy
-  args: ['cp', '-r', 'src/build/*', 'gs://soulution.cloud/']
+  args: ['cp', '-r', 'build/*', 'gs://soulution.cloud/']
   volumes:
   - name: 'build'
     path: '/app/build'
