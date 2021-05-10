@@ -1,10 +1,10 @@
 steps:
 - name: node
   entrypoint: yarn
-  args: ['install']
+  args: ['--cwd', 'src', 'install']
 - name: node
   entrypoint: yarn
-  args: ['build']
+  args: ['--cwd', 'src', 'build']
 - name: 'gcr.io/cloud-builders/gsutil'
   id: Deploy
-  args: ['cp', '-r', 'public/*', 'gs://soulution.cloud/']
+  args: ['cp', '-r', 'src/build/*', 'gs://soulution.cloud/']
