@@ -1,7 +1,12 @@
 steps:
+- name: 'bash'
+  id: SubstituteVars
+  args: ['./substitutevars.sh']
 - name: 'gcr.io/cloud-builders/yarn'
+  id: Packages
   args: ['--cwd', 'src', 'install']
 - name: 'gcr.io/cloud-builders/yarn'
+  id: Build
   args: ['--cwd', 'src', 'build']
 - name: 'gcr.io/cloud-builders/gsutil'
   id: Deploy
