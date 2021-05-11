@@ -3,12 +3,12 @@ steps:
   id: SubstituteVars
   args: ['./substitutevars.sh']
   env:
-    - '_API_KEY=$_API_KEY'
-    - '_AUTH_DOMAIN=$_AUTH_DOMAIN'
-    - 'PROJECT_ID=$PROJECT_ID'
-    - '_STORAGE_BUCKET=$_STORAGE_BUCKET'
-    - '_MESSAGE_SENDER_ID=$_MESSAGE_SENDER_ID'
-    - '_APP_ID=$_APP_ID'
+    - 'REACT_APP_API_KEY=$_API_KEY'
+    - 'REACT_APP_AUTH_DOMAIN=$_AUTH_DOMAIN'
+    - 'REACT_APP_PROJECT_ID=$PROJECT_ID'
+    - 'REACT_APP_STORAGE_BUCKET=$_STORAGE_BUCKET'
+    - 'REACT_APP_MESSAGE_SENDER_ID=$_MESSAGE_SENDER_ID'
+    - 'REACT_APP_APP_ID=$_APP_ID'
 - name: 'gcr.io/cloud-builders/yarn'
   id: Packages
   args: ['--cwd', 'src', 'install']

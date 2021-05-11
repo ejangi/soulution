@@ -7,12 +7,12 @@ services:
             - ./src:/app
         environment:
             PORT: 3000
-            PROJECT_ID: projectId
-            _API_KEY: apiKey
-            _AUTH_DOMAIN: authDomain
-            _STORAGE_BUCKET: storageBucket
-            _MESSAGE_SENDER_ID: messageSenderId
-            _APP_ID: appId
+            REACT_APP_PROJECT_ID: ""
+            REACT_APP_API_KEY: ""
+            REACT_APP_AUTH_DOMAIN: ""
+            REACT_APP_STORAGE_BUCKET: ""
+            REACT_APP_MESSAGE_SENDER_ID: ""
+            REACT_APP_APP_ID: ""
         ports:
             - 3000:3000
         stdin_open: true
