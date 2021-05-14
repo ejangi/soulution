@@ -12,10 +12,8 @@ function ProblemsModal(props) {
     useEffect(() => {
         setProblem(props.problem);
 
-        if (currentStep !== props.openState) {
-            setCurrentStep(props.openState);
-        }
-    }, [props, currentStep]);
+        setCurrentStep(props.openState);
+    }, [props]);
 
     const steps = [
         { number: 1, label: 'Define' },
