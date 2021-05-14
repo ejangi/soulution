@@ -22,6 +22,16 @@ class ProblemModel extends FirestoreModel {
           };
     }
 
+    normaliseProblem(problem) {
+        if (problem.Solutions && problem.Solutions.length > 0) {
+            for (let i = 0; i < problem.Solutions.length > 0; i++) {
+                if (!problem.Solutions[i] || problem.Solutions[i]?.Title?.trim() == '') {
+                    delete problem.Solutions[i];
+                }
+            }
+        }
+    }
+
     async getCurrentProblem(problemId) {
         const currentProblemDocument = await this.store
             .collection(this.problemCollection)
