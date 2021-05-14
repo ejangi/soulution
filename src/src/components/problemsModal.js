@@ -11,7 +11,11 @@ function ProblemsModal(props) {
 
     useEffect(() => {
         setProblem(props.problem);
-    }, [props]);
+
+        if (currentStep !== props.openState) {
+            setCurrentStep(props.openState);
+        }
+    }, [props, currentStep]);
 
     const steps = [
         { number: 1, label: 'Define' },
@@ -39,8 +43,7 @@ function ProblemsModal(props) {
     }
 
     function close() {
-        props.setOpenState(false);
-        setCurrentStep(1);
+        props.setOpenState(0);
     }
 
     function handleChange(key, value) {
@@ -57,7 +60,7 @@ function ProblemsModal(props) {
     }
 
     return(
-        <div className="modal" id={name} tabIndex="-1" role="dialog" aria-hidden={!props.openState}>
+        <div className="modal" id={name} tabIndex="-1" role="dialog" aria-hidden={props.openState > 0 ? false : true}>
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header">

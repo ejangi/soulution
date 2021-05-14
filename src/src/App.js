@@ -8,7 +8,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import LogoInversed from './Logo-Inversed.svg';
 
 function App() {
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(0);
   const [problems, setProblems] = useState([]);
   const [problem, setProblem] = useState(ProblemCollection.blankProblem());
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -49,7 +49,14 @@ function App() {
     let filtered = problems.filter(p => p.id === id);
     let prob = filtered && filtered.length > 0 ? filtered[0] : null;
     setProblem(prob);
-    setModal(true);
+
+    if (prob.Solution) {
+      setModal(6);
+    }
+    else {
+      setModal(1);
+    }
+
     return prob;
   }
 
@@ -102,7 +109,7 @@ function App() {
 
   const handleModalButton = (e) => {
     setProblem(problem => ProblemCollection.blankProblem());
-    setModal(true);
+    setModal(1);
   };
 
   return (
