@@ -1,28 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useDynamicRefs from 'use-dynamic-refs';
 
 function TextArrayInput(props) {
     // By having state within the component change it will force the component to re-render.
-    const [, setArrayCount] = useState(props.value.length);
+    const [values, setValues] = useState(props.value);
     const [getRef, setRef] =  useDynamicRefs();
+
+    useEffect(() => {
+        setValues(props.value);
+    }, [props]);
 
     function toKey(i) {
         return props.id + i;
     }
 
     function gatherValues() {
-        let values = [];
-        [...Array(props.value.length).keys()].forEach(i => {
-            if (getRef(toKey(i)) && getRef(toKey(i)).current.lastChild.value.length > 0) {
-                values.push(getRef(toKey(i)).current.lastChild.value);
+        let vals = [];
+        [...Array(values.length).keys()].forEach(i => {
+            if (getRef(toKey(i)) && getRef(toKey(i)).current && getRef(toKey(i)).current.lastChild.value.length > 0) {
+                vals.push(getRef(toKey(i)).current.lastChild.value);
             }
         });
 
-        if (getRef(toKey('New')) && getRef(toKey('New')).current.lastChild.value.length > 0) {
-            values.push(getRef(toKey('New')).current.lastChild.value);
+        if (getRef(toKey('New')) && getRef(toKey('New')).current && getRef(toKey('New')).current.lastChild.value.length > 0) {
+            vals.push(getRef(toKey('New')).current.lastChild.value);
         }
 
-        return values;
+        return vals;
     }
 
     function commit(e) {
@@ -31,9 +35,15 @@ function TextArrayInput(props) {
             return false;
         }
 
-        let values = gatherValues();
-        if (values !== props.value) {
-            props.handleChange(props.id, values);
+        let vals = gatherValues();
+        if (vals !== values) {
+            props.handleChange(props.id, vals);
+            setValues(vals);
+            setTimeout(() => {
+                if (getRef(toKey('New')) && getRef(toKey('New')).current) {
+                    getRef(toKey('New')).current.focus();
+                }
+            }, 10);
         }
     }
 
@@ -43,7 +53,6 @@ function TextArrayInput(props) {
 
             if (e.target.className === 'text-array-input-new') {
                 commit(e);
-                setArrayCount(count => count + 1);
                 e.target.value = "";
                 e.target.focus();
             } else if(getRef(toKey(e.target.tabIndex))) {
@@ -81,10 +90,10 @@ function TextArrayInput(props) {
 
     return(
         <div className="text-array-input">
-            { props.value.map((val, i) => {
+            { values.map((val, i) => {
                 return <label ref={setRef(toKey(i))} key={toKey(i+1)}><em>{(i+1)}</em><input type="text" defaultValue={val} onBlur={onChange} onKeyUp={onKeyUp} tabIndex={(i+1)} /></label>
             }) }
-            <label ref={setRef(toKey('New'))} key={toKey(props.value.length+1)} className="text-array-input-new"><em>{(props.value.length+1)}</em><input className="text-array-input-new" type="text" onBlur={onChange} onKeyUp={onKeyUp} tabIndex={(props.value.length+1)} /></label>
+            <label ref={setRef(toKey('New'))} key={toKey(values.length+1)} className="text-array-input-new"><em>{(values.length+1)}</em><input className="text-array-input-new" type="text" onBlur={onChange} onKeyUp={onKeyUp} tabIndex={(values.length+1)} /></label>
         </div>
     );
 }

@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import StepCounter from '../components/stepCounter';
 import TextArrayInput from '../components/textArrayInput';
 
 function ProblemsModal(props) {
     const [currentStep, setCurrentStep] = useState(1);
+    const [problem, setProblem] = useState(props.problem);
     const name = props.name ? props.name : 'problemsModal';
+
+    useEffect(() => {
+        setProblem(props.problem);
+    }, [props]);
 
     const steps = [
         { number: 1, label: 'Define' },
@@ -62,7 +67,7 @@ function ProblemsModal(props) {
                                 <h2>Define the problem</h2>
                                 <div className="field">
                                     <label htmlFor="Title">The Problem</label>
-                                    <input type="text" id="Title" defaultValue={props.problem.Title} onChange={(e) => { handleChange('Title', e.target.value) }} />
+                                    <input type="text" id="Title" defaultValue={problem.Title} onChange={(e) => { handleChange('Title', e.target.value) }} />
                                 </div>
                                 <div className="hint">
                                     The more narrowly you can define the problem, the better.
@@ -74,7 +79,7 @@ function ProblemsModal(props) {
                                 <h2>List all possible solutions <span className="nowrap">(even the bad ones)</span></h2>
                                 <div className="field">
                                     <label htmlFor="Solutions">Possible solutions</label>
-                                    <TextArrayInput id="Solutions" key="Solutions" value={props.problem?.Solutions ? props.problem.Solutions.map(solution => solution.Title) : []} handleChange={handleChange} />
+                                    <TextArrayInput id="Solutions" key="Solutions" value={problem?.Solutions ? problem.Solutions.map(solution => solution.Title) : []} handleChange={handleChange} />
                                 </div>
                                 <div className="hint">
                                     Avoid evaluating the merits of each solution in this step.
@@ -83,7 +88,7 @@ function ProblemsModal(props) {
                         }
                         { currentStep === 3 &&
                             <div className="step evaluate">
-                                { props.problem.Solutions.map((solution, i) => {
+                                { problem.Solutions.map((solution, i) => {
                                     return <div key={i} className="solution">
                                         <h2>{solution.Title}</h2>
                                         <div className="field pros">
@@ -102,8 +107,8 @@ function ProblemsModal(props) {
                         { currentStep === 4 &&
                             <div className="step choose">
                                 <h2>Choose the best or most practical solution</h2>
-                                { props.problem.Solutions.map((solution, i) => {
-                                    return <label key={`Choose[${i}]`} className={props.problem.Solution && props.problem.Solution === solution ? 'radio active' : 'radio'} tabIndex={i}>
+                                { problem.Solutions.map((solution, i) => {
+                                    return <label key={`Choose[${i}]`} className={problem.Solution && problem.Solution === solution ? 'radio active' : 'radio'} tabIndex={i}>
                                         <input type="radio" id="Solution" name="Solution" value={solution.Title} onChange={handleChooseSolution} />
                                         <span className="label">{solution.Title}</span>
                                     </label>
@@ -115,16 +120,16 @@ function ProblemsModal(props) {
                                 <h2>Plan how you will carry out the best solution</h2>
                                 <div className="field">
                                     <label htmlFor="Plan">The Plan</label>
-                                    <TextArrayInput id="Plan" key="Plan" value={props.problem?.Plan} handleChange={handleChange} />
+                                    <TextArrayInput id="Plan" key="Plan" value={problem?.Plan} handleChange={handleChange} />
                                 </div>
                             </div>
                         }
                         { currentStep === 6 &&
                             <div className="step review">
                                 <h2>Review your solution</h2>
-                                <h3>{props.problem.Solution}</h3>
+                                <h3>{problem.Solution}</h3>
                                 <ol>
-                                    {props.problem?.Plan.map((item, i) => {
+                                    {problem?.Plan.map((item, i) => {
                                         return <li key={i}>{item}</li>
                                     })}
                                 </ol>
