@@ -59,6 +59,12 @@ function ProblemsModal(props) {
         }
     }
 
+    function handleDelete(e) {
+        if (problem.id && window.confirm('Are you sure?')) {
+            props.handleDelete(problem.id);
+        }
+    }
+
     return(
         <div className="modal" id={name} tabIndex="-1" role="dialog" aria-hidden={props.openState > 0 ? false : true}>
             <div className="modal-dialog" role="document">
@@ -145,6 +151,9 @@ function ProblemsModal(props) {
                     <div className="modal-footer">
                         { currentStep > 1 &&
                         <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={prev}>Back</button>
+                        }
+                        { problem.id &&
+                        <button type="button" className="btn btn-delete" onClick={handleDelete}>Delete</button>
                         }
                         { currentStep === steps[steps.length-1].number ? 
                         <button type="button" className="btn btn-primary" onClick={close}>Close</button>

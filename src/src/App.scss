@@ -6,6 +6,7 @@ $color-white: white;
 $color-light-grey: #E5E5E5;
 $color-medium-grey: #A4AEB7;
 $color-dark-grey: #455462;
+$color-red: #f44336;
 $gradient-blue: linear-gradient(134.48deg, #0085FF 3.95%, #00B2FF 96.04%);
 $font-family: 'Baloo 2', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
@@ -459,6 +460,13 @@ label.radio {
       margin-left: auto;
     }
   }
+}
+
+button.btn-delete {
+  margin-left: auto;
+  color: $color-red;
+  background: transparent;
+  box-shadow: none;
 }
 
 .step-counter {

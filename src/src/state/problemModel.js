@@ -79,6 +79,14 @@ class ProblemModel extends FirestoreModel {
             return { ...problem, id: newId };
         }
     }
+
+    async deleteCurrentProblem(problemId) {
+        const result = await this.store
+            .collection(this.problemCollection)
+            .doc(problemId)
+            .delete();
+        return result;
+    }    
 }
 
 export default new ProblemModel();

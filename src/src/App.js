@@ -60,6 +60,23 @@ function App() {
     return prob;
   }
 
+  const deleteProblem = async (id) => {
+    ProblemCollection.deleteCurrentProblem(problem.id)
+    .then(() => {
+      setModal(0);
+      try {
+        ProblemCollection.getAllProblems()
+        .then((data) => {
+          setProblems(prev => (data))
+        });
+      } catch (error) {
+         console.error(error);
+      }
+    }).catch((err) => {
+      console.error(err);
+    });
+  }
+
   const onChange = (key, value) => {
     if (key === 'Solutions') {
         setProblem(problem => {
@@ -146,7 +163,7 @@ function App() {
                 <button type="button" className="btn btn-pimary" onClick={handleModalButton}>Solve a new problem</button>
               </div>
             </footer>
-            <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} onChange={onChange} onStepChange={onStepChange} />
+            <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} handleDelete={deleteProblem} onChange={onChange} onStepChange={onStepChange} />
         </div>
             :
         <div className="App empty">
@@ -169,7 +186,7 @@ function App() {
                 </div>              
               </div>
             </main>
-            <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} />
+            <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} handleDelete={deleteProblem} />
         </div>
       }
       </>
