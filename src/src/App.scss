@@ -70,6 +70,10 @@ body,
       justify-content: center;
     }
   }
+
+  .logo {
+    margin-bottom: $gutter;
+  }
 }
 
 .App {
@@ -97,6 +101,13 @@ body,
   }
 }
 
+.flex {
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+  justify-content: space-between;
+}
+
 .flex-stack {
   height: 100%;
   display: flex;
@@ -108,10 +119,20 @@ body,
   & > .row {
     text-align: center;
   }
+
+  a:link,
+  a:visited {
+    color: $color-white;
+  }
 }
 
 h2 {
   margin: 0 0 $gutter/2 0;
+}
+
+a:link,
+a:visited {
+  color: $color-primary;
 }
 
 button,
@@ -248,6 +269,11 @@ label.radio {
   color: $color-white;
   background: $gradient-blue;
   z-index: 10;
+
+  a:link,
+  a:visited {
+    color: $color-white;
+  }
 }
 
 .App.empty main {
@@ -503,8 +529,4 @@ label.radio {
     color: $color-dark-grey;
     padding-left: $gutter;
   }
-}
-
-.logo {
-  margin-bottom: $gutter;
 }

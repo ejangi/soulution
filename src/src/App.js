@@ -105,14 +105,6 @@ function App() {
     setModal(true);
   };
 
-  let incompleteProblems = [];
-  let completeProblems = [];
-
-  if (problems.length > 0) {
-    incompleteProblems = problems.filter(prob => prob.SolvedDate === null );
-    completeProblems = problems.filter(prob => prob.SolvedDate !== null );
-  }
-
   return (
     <>
     { !isSignedIn ?
@@ -130,16 +122,16 @@ function App() {
         <div className="App">
             <header className="header">
               <div className="container">
-                <p><button className="btn btn-secondary" onClick={() => firebase.auth().signOut()}>Logout</button></p>
-                { incompleteProblems.length > 0 &&
-                  <ProblemsList problems={incompleteProblems} getProblem={getProblem} />
-                } 
+                <div className="flex">
+                  <img src={LogoInversed} alt="Soulution" className="logo" width="80" />
+                  <a href="#logout" className="logout" onClick={() => firebase.auth().signOut()}>Logout</a>
+                </div>
               </div>
             </header>
              
             <main>
               <div className="container">
-                <ProblemsList problems={completeProblems} getProblem={getProblem} />
+                <ProblemsList problems={problems} getProblem={getProblem} />
               </div>
             </main>
             <footer className="footer">
@@ -154,7 +146,10 @@ function App() {
             <main>
               <div className="container">
                 <div className="flex-stack">
-                <p><button className="btn btn-secondary" onClick={() => firebase.auth().signOut()}>Logout</button></p>
+                  <div className="flex">
+                    <img src={LogoInversed} alt="Soulution" className="logo" width="90" />
+                    <a href="#logout" className="logout" onClick={() => firebase.auth().signOut()}>Logout</a>
+                  </div>
                   <div className="row">&nbsp;</div>
                   <div className="row">
                     <h1>Welcome!</h1>
