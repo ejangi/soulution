@@ -24,8 +24,8 @@ class ProblemModel extends FirestoreModel {
 
     normaliseProblem(problem) {
         if (problem.Solutions && problem.Solutions.length > 0) {
-            for (let i = 0; i < problem.Solutions.length > 0; i++) {
-                if (!problem.Solutions[i] || problem.Solutions[i]?.Title?.trim() == '') {
+            for (let i = 0; i < problem.Solutions.length; i++) {
+                if (!problem.Solutions[i] || problem.Solutions[i]?.Title?.trim() === '') {
                     delete problem.Solutions[i];
                 }
             }

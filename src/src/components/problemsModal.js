@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import StepCounter from '../components/stepCounter';
 import TextArrayInput from '../components/textArrayInput';
+import escapeAttr from '../helpers/escapeAttr';
+import unescapeAttr from '../helpers/unescapeAttr';
 
 function ProblemsModal(props) {
     const [currentStep, setCurrentStep] = useState(1);
@@ -49,7 +51,8 @@ function ProblemsModal(props) {
         if (e.target.parentNode && e.target.parentNode.tagName === 'LABEL') {
             document.querySelectorAll(`#${e.target.id}`).forEach(el => el.parentNode.classList.remove('active'));
             e.target.parentNode.classList.add('active');
-            handleChange(e.target.id, e.target.value);
+            let val = unescapeAttr(e.target.value);
+            handleChange(e.target.id, val);
         }
     }
 
@@ -109,7 +112,7 @@ function ProblemsModal(props) {
                                 <h2>Choose the best or most practical solution</h2>
                                 { problem.Solutions.map((solution, i) => {
                                     return <label key={`Choose[${i}]`} className={problem.Solution && problem.Solution === solution ? 'radio active' : 'radio'} tabIndex={i}>
-                                        <input type="radio" id="Solution" name="Solution" value={solution.Title} onChange={handleChooseSolution} />
+                                        <input type="radio" id="Solution" name="Solution" value={escapeAttr(solution.Title)} onChange={handleChooseSolution} />
                                         <span className="label">{solution.Title}</span>
                                     </label>
                                 })}
