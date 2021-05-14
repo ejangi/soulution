@@ -111,8 +111,8 @@ function ProblemsModal(props) {
                             <div className="step choose">
                                 <h2>Choose the best or most practical solution</h2>
                                 { problem.Solutions.map((solution, i) => {
-                                    return <label key={`Choose[${i}]`} className={problem.Solution && problem.Solution === solution ? 'radio active' : 'radio'} tabIndex={i}>
-                                        <input type="radio" id="Solution" name="Solution" value={escapeAttr(solution.Title)} onChange={handleChooseSolution} />
+                                    return <label key={`Choose[${i}]`} className={problem.Solution && problem.Solution === solution.Title ? 'radio active' : 'radio'} tabIndex={i}>
+                                        <input type="radio" id="Solution" name="Solution" value={escapeAttr(solution.Title)} onChange={handleChooseSolution} checked={problem.Solution === solution.Title} />
                                         <span className="label">{solution.Title}</span>
                                     </label>
                                 })}
