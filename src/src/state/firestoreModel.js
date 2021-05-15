@@ -14,8 +14,4 @@ export default class FirestoreModel {
     get problemCollection() {
         return 'problems';
     }
-
-    get userCollection() {
-        return 'users';
-    }
 }
