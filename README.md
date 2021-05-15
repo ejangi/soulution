@@ -20,8 +20,18 @@ service cloud.firestore {
       allow read, create, update, delete: if isAuthorized();
     }
     function isAuthorized() {
-    	return request.auth.uid == '<your user id here>';
+    	return request.auth.uid == resource.data.uid;
     }
   }
 }
+```
+
+This app also requires a Composite Index:
+
+```yaml
+Collection_ID: problems
+Fields_Indexed:
+  - 'uid Ascending'
+  - 'LastUpdatedDate Descending'
+Query_Scope: Collection
 ```
