@@ -186,7 +186,7 @@ function App() {
                 </div>              
               </div>
             </main>
-            <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} handleDelete={deleteProblem} />
+            <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} handleDelete={deleteProblem} onChange={onChange} onStepChange={onStepChange} />
         </div>
       }
       </>
