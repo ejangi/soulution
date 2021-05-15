@@ -75,12 +75,12 @@ class ProblemModel extends FirestoreModel {
         } else {
             problem.CreatedDate = this.dateToTimestamp(new Date());
             problem.LastUpdatedDate = this.dateToTimestamp(new Date());
-            delete problem.id;
 
-            let newId = await this.store
+            let docRef = await this.store
                 .collection(this.problemCollection)
                 .add(problem);
-            return { ...problem, id: newId };
+
+            return { ...problem, id: docRef.id };
         }
     }
 

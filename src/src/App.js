@@ -105,7 +105,6 @@ function App() {
               if (!currentSolutions.includes(solution)) {
                 let newSolution = ProblemCollection.blankSolution();
                 newSolution.Title = solution;
-                newSolution.CreatedDate = ProblemCollection.dateToTimestamp(new Date());
                 problem[key].push(newSolution);
               }
             });
