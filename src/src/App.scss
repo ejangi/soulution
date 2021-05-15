@@ -397,13 +397,16 @@ label.radio {
     align-items: stretch;
   }
 
-  .modal-header,
-  .modal-footer {
+  .modal-header {
     padding: ($gutter/2);
 
     @media (min-width: $width-sm) {
       padding: $gutter;
     }
+  }
+
+  .modal-footer {
+    padding: ($gutter/2) $gutter $gutter $gutter;
   }
 
   .modal-header {
