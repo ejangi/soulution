@@ -48,14 +48,25 @@ function App() {
   const getProblem = (id) => {
     let filtered = problems.filter(p => p.id === id);
     let prob = filtered && filtered.length > 0 ? filtered[0] : null;
-    setProblem(prob);
+    setProblem(oldProblem => {
+      if (prob.Solution) {
+        setModal(6);
+      }
+      else if (prob.Plan && prob.Plan.length > 0) {
+        setModal(5);
+      }
+      else if (prob.Solutions && prob.Solutions.length > 0) {
+        setModal(4);
+      }
+      else if (prob.Title) {
+        setModal(2);
+      }
+      else {
+        setModal(1);
+      }
 
-    if (prob.Solution) {
-      setModal(6);
-    }
-    else {
-      setModal(1);
-    }
+      return prob
+    });
 
     return prob;
   }
@@ -119,6 +130,10 @@ function App() {
     try {
       let savedProblem = await ProblemCollection.saveCurrentProblem(problem);
       setProblem(problem => savedProblem);
+      ProblemCollection.getAllProblems()
+        .then((data) => {
+          setProblems(prev => (data))
+        });
     } catch(err) {
       console.error(err);
     }

@@ -23,6 +23,10 @@ class ProblemModel extends FirestoreModel {
     }
 
     normaliseProblem(problem) {
+        if (problem.Solution && !problem.SolvedDate) {
+            problem.SolvedDate = this.dateToTimestamp(new Date());
+        }
+
         if (problem.Solutions && problem.Solutions.length > 0) {
             for (let i = 0; i < problem.Solutions.length; i++) {
                 if (!problem.Solutions[i] || problem.Solutions[i]?.Title?.trim() === '') {
@@ -30,6 +34,8 @@ class ProblemModel extends FirestoreModel {
                 }
             }
         }
+
+        return problem;
     }
 
     async getCurrentProblem(problemId) {
@@ -53,9 +59,7 @@ class ProblemModel extends FirestoreModel {
             throw new Error('Trying to save an undefined problem');
         }
 
-        if (problem.Solution && !problem.SolvedDate) {
-            problem.SolvedDate = this.dateToTimestamp(new Date());
-        }
+        problem = this.normaliseProblem(problem);
 
         if (problem.id) {
             // Make sure we got a copy and not a reference of the original

@@ -11,9 +11,11 @@ function ProblemsModal(props) {
 
     useEffect(() => {
         setProblem(props.problem);
-
-        setCurrentStep(props.openState);
     }, [props]);
+
+    useEffect(() => {
+        setCurrentStep(props.openState);
+    }, [props.openState]);
 
     const steps = [
         { number: 1, label: 'Define' },
@@ -52,6 +54,7 @@ function ProblemsModal(props) {
         if (e.target.parentNode && e.target.parentNode.tagName === 'LABEL') {
             document.querySelectorAll(`#${e.target.id}`).forEach(el => el.parentNode.classList.remove('active'));
             e.target.parentNode.classList.add('active');
+            e.target.checked = true;
             let val = unescapeAttr(e.target.value);
             handleChange(e.target.id, val);
         }
