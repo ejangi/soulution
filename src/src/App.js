@@ -39,16 +39,16 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      if (isSignedIn) {
+      if (uid) {
         try {
-          const data = await ProblemCollection.getAllProblems();
+          const data = await ProblemCollection.getAllProblems(uid);
           await setProblems(prev => (data));
         } catch (error) {
           console.error(error);
         }
       }
     })();
-  }, [isSignedIn]);
+  }, [uid]);
 
   const getProblem = (id) => {
     let filtered = problems.filter(p => p.id === id);
@@ -82,7 +82,7 @@ function App() {
     .then(() => {
       setModal(0);
       try {
-        ProblemCollection.getAllProblems()
+        ProblemCollection.getAllProblems(uid)
         .then((data) => {
           setProblems(prev => (data))
         });
@@ -139,7 +139,7 @@ function App() {
 
       let savedProblem = await ProblemCollection.saveCurrentProblem(problem);
       setProblem(problem => savedProblem);
-      ProblemCollection.getAllProblems()
+      ProblemCollection.getAllProblems(uid)
         .then((data) => {
           setProblems(prev => (data))
         });

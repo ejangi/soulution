@@ -47,9 +47,10 @@ class ProblemModel extends FirestoreModel {
         return { ...currentProblemDocument.data(), id: currentProblemDocument.id };
     }
 
-    async getAllProblems() {
+    async getAllProblems(uid) {
       const problemCollection = await this.store
             .collection(this.problemCollection)
+            .where('uid', '==', uid)
             .orderBy('LastUpdatedDate', 'desc')
             .get();
       return problemCollection.docs.map(problem => ({ ...problem.data(), id: problem.id }));
