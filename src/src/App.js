@@ -163,7 +163,7 @@ function App() {
               <div className="container">
                 <div className="flex">
                   <img src={LogoInversed} alt="Soulution" className="logo" width="80" />
-                  <a href="#logout" className="logout" onClick={() => firebase.auth().signOut()}>Logout</a>
+                  <a href="#logout" className="logout" onClick={(e) => { e.preventDefault(); firebase.auth().signOut()}}>Logout</a>
                 </div>
               </div>
             </header>
@@ -187,7 +187,7 @@ function App() {
                 <div className="flex-stack">
                   <div className="flex">
                     <img src={LogoInversed} alt="Soulution" className="logo" width="90" />
-                    <a href="#logout" className="logout" onClick={() => firebase.auth().signOut()}>Logout</a>
+                    <a href="#logout" className="logout" onClick={(e) => { e.preventDefault(); firebase.auth().signOut()}}>Logout</a>
                   </div>
                   <div className="row">&nbsp;</div>
                   <div className="row">
