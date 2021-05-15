@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import ProblemCollection from './state/problemModel';
 import ProblemsList from './components/problemsList';
 import ProblemsModal from './components/problemsModal';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import LogoInversed from './Logo-Inversed.svg';
 
@@ -22,8 +23,8 @@ function App() {
       ],
       callbacks: {
         // Avoid redirects after sign-in.
-        signInSuccessWithAuthResult: () => false,
-      },
+        signInSuccessWithAuthResult: () => false
+      }
   };
 
   // Listen to the Firebase Auth state and set the local state.
@@ -36,14 +37,16 @@ function App() {
 
   useEffect(() => {
     (async () => {
-       try {
-         const data = await ProblemCollection.getAllProblems();
-         await setProblems(prev => (data));
-       } catch (error) {
+      if (isSignedIn) {
+        try {
+          const data = await ProblemCollection.getAllProblems();
+          await setProblems(prev => (data));
+        } catch (error) {
           console.error(error);
-       }
+        }
+      }
     })();
-  }, []);
+  }, [isSignedIn]);
 
   const getProblem = (id) => {
     let filtered = problems.filter(p => p.id === id);
@@ -72,7 +75,8 @@ function App() {
   }
 
   const deleteProblem = async (id) => {
-    ProblemCollection.deleteCurrentProblem(problem.id)
+    if (!id) return;
+    ProblemCollection.deleteCurrentProblem(id)
     .then(() => {
       setModal(0);
       try {
