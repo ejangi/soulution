@@ -4,6 +4,7 @@ class ProblemModel extends FirestoreModel {
     blankProblem() {
         return {
             "id": null,
+            "uid": null,
             "Plan": [],
             "Solution": null,
             "Solutions": [],

@@ -13,6 +13,7 @@ function App() {
   const [problems, setProblems] = useState([]);
   const [problem, setProblem] = useState(ProblemCollection.blankProblem());
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [uid, setUid] = useState(null);
 
   const uiConfig = {
       // Popup signin flow rather than redirect flow.
@@ -31,6 +32,7 @@ function App() {
   useEffect(() => {
     const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
       setIsSignedIn(!!user);
+      setUid(user.uid);
     });
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
   }, []);
@@ -131,6 +133,10 @@ function App() {
 
   const onStepChange = async (step) => {
     try {
+      if (!problem.uid && uid) {
+        problem.uid = uid;
+      }
+
       let savedProblem = await ProblemCollection.saveCurrentProblem(problem);
       setProblem(problem => savedProblem);
       ProblemCollection.getAllProblems()
