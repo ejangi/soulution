@@ -46,6 +46,7 @@ function App() {
           const data = await ProblemCollection.getAllProblems(uid);
           await setProblems(prev => (data));
         } catch (error) {
+          error.description = 'During getAllProblems(uid) at uid change.';
           setError(error);
           console.error(error);
         }
@@ -90,10 +91,12 @@ function App() {
           setProblems(prev => (data))
         });
       } catch (error) {
+        error.description = 'At getAllProblems(uid) during deleteProblem().';
         setError(error);
         console.error(error);
       }
     }).catch((err) => {
+      err.description = 'At deleteCurrentProblem(id) during deleteProblem()';
       setError(err);
       console.error(err);
     });
@@ -149,6 +152,8 @@ function App() {
           setProblems(prev => (data))
         });
     } catch(err) {
+      err.description = 'Catch at saveCurrentProblem(problem) during onStepChange().';
+      err.stack = JSON.stringify(problem);
       setError(err);
       console.error(err);
     }

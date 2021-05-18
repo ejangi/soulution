@@ -482,6 +482,8 @@ label.radio {
   }
 
   .modal-body {
+    display: block;
+    
     & > h3:first-child {
       color: $color-red;
     }
@@ -572,6 +574,10 @@ button.btn-delete {
     color: $color-dark-grey;
     padding-left: $gutter;
   }
+}
+
+pre {
+  margin-bottom: $gutter;
 }
 
 code {
