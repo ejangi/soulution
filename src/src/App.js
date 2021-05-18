@@ -1,11 +1,12 @@
-import './App.scss';
 import React, { useState, useEffect } from 'react';
 import ProblemCollection from './state/problemModel';
 import ProblemsList from './components/problemsList';
 import ProblemsModal from './components/problemsModal';
+import ErrorModal from './components/errorModal';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import './App.scss';
 import LogoInversed from './Logo-Inversed.svg';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   const [problem, setProblem] = useState(ProblemCollection.blankProblem());
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [uid, setUid] = useState(null);
+  const [error, setError] = useState(null);
 
   const uiConfig = {
       // Popup signin flow rather than redirect flow.
@@ -44,6 +46,7 @@ function App() {
           const data = await ProblemCollection.getAllProblems(uid);
           await setProblems(prev => (data));
         } catch (error) {
+          setError(error);
           console.error(error);
         }
       }
@@ -87,9 +90,11 @@ function App() {
           setProblems(prev => (data))
         });
       } catch (error) {
-         console.error(error);
+        setError(error);
+        console.error(error);
       }
     }).catch((err) => {
+      setError(err);
       console.error(err);
     });
   }
@@ -144,6 +149,7 @@ function App() {
           setProblems(prev => (data))
         });
     } catch(err) {
+      setError(err);
       console.error(err);
     }
   };
@@ -188,6 +194,7 @@ function App() {
               </div>
             </footer>
             <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} handleDelete={deleteProblem} onChange={onChange} onStepChange={onStepChange} />
+            <ErrorModal error={error} />
         </div>
             :
         <div className="App empty">
@@ -211,6 +218,7 @@ function App() {
               </div>
             </main>
             <ProblemsModal openState={modal} setOpenState={setModal} problem={problem} setProblem={setProblem} handleDelete={deleteProblem} onChange={onChange} onStepChange={onStepChange} />
+            <ErrorModal error={error} />
         </div>
       }
       </>

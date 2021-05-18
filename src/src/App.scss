@@ -413,6 +413,10 @@ label.radio {
     display: flex;
     justify-content: space-between;
     border-bottom: 3px solid $color-light-grey;
+
+    h2 {
+      margin: 0;
+    }
   }
 
   .btn-close {
@@ -433,6 +437,7 @@ label.radio {
 
   .modal-body {
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     height: 100%;
     padding: $gutter;
@@ -452,6 +457,10 @@ label.radio {
         text-align: center;
       }
     }
+
+    & > h3:first-child {
+      margin-top: 0;
+    }
   }
 
   .modal-footer {
@@ -461,6 +470,20 @@ label.radio {
 
     .btn-primary {
       margin-left: auto;
+    }
+  }
+}
+
+.modal.error {
+  .modal-header {
+    h2 {
+      color: $color-red;
+    }
+  }
+
+  .modal-body {
+    & > h3:first-child {
+      color: $color-red;
     }
   }
 }
@@ -549,4 +572,9 @@ button.btn-delete {
     color: $color-dark-grey;
     padding-left: $gutter;
   }
+}
+
+code {
+  font-size: 10pt;
+  font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
 }
