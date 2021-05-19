@@ -16,11 +16,23 @@ For security rules, use:
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /problems/{document} {
-      allow read, create, update, delete: if isAuthorized();
+  	// Block all read/write by default
+    match /{document=**} {
+      allow read: if false;
+      allow write: if false;
     }
+    
+    match /problems/{problem} {
+    	allow create: if isAuthorizedToCreate();
+      allow read, update, delete: if isAuthorized();
+    }
+    
     function isAuthorized() {
     	return request.auth.uid == resource.data.uid;
+    }
+    
+    function isAuthorizedToCreate() {
+    	return request.auth.uid == request.resource.data.uid;
     }
   }
 }
