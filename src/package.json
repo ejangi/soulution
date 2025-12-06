@@ -1,23 +1,23 @@
 {
   "name": "Soulution",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "firebase": "^8.4.2",
-    "node-sass": "^5.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-firebaseui": "^5.0.2",
-    "react-scripts": "4.0.3",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "firebase": "^12.6.0",
+    "sass": "^1.94.2",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "react-firebaseui": "^6.0.0",
+    "react-scripts": "5.0.1",
     "use-dynamic-refs": "^1.0.0",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^5.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
