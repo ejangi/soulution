@@ -8,18 +8,19 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/react": "^18.2.0",
+    "cross-env": "^7.0.3",
     "firebase": "^10.8.0",
     "firebaseui": "^6.1.0",
-    "sass": "^1.94.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
+    "sass": "^1.94.2",
     "typescript": "^4.9.5",
     "web-vitals": "^5.1.0"
   },
   "scripts": {
-    "start": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

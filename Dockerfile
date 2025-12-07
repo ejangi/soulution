@@ -16,7 +16,9 @@ ENV REACT_APP_APP_ID ""
 
 RUN corepack enable && corepack prepare yarn@4.9.1 --activate
 
-COPY src/package.json /app/
+COPY src/package.json src/yarn.lock /app/
 RUN yarn install
 
-CMD yarn build
+COPY src /app/
+
+CMD yarn start
