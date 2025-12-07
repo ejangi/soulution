@@ -5,7 +5,7 @@ import ProblemsModal from "./components/problemsModal";
 import ErrorModal from "./components/errorModal";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import FirebaseAuthUI from "./components/FirebaseAuthUI";
 import "./App.scss";
 import LogoInversed from "./Logo-Inversed.svg";
 
@@ -167,7 +167,7 @@ function App() {
           <header className="header">
             <div className="container">
               <img src={LogoInversed} alt="Soulution" className="logo" />
-              <StyledFirebaseAuth
+              <FirebaseAuthUI
                 uiConfig={uiConfig}
                 firebaseAuth={firebase.auth()}
               />
