@@ -1,3 +1,4 @@
 .DS_Store
 src/.yarn/cache
 src/.yarn/install-state.gz
+src/build
