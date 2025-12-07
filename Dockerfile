@@ -14,7 +14,9 @@ ENV REACT_APP_STORAGE_BUCKET ""
 ENV REACT_APP_MESSAGE_SENDER_ID ""
 ENV REACT_APP_APP_ID ""
 
-COPY src/package.json src/yarn.lock /app/
+RUN corepack enable && corepack prepare yarn@4.9.1 --activate
+
+COPY src/package.json /app/
 RUN yarn install
 
 CMD yarn build
