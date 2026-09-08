@@ -34,7 +34,7 @@ function App() {
       .auth()
       .onAuthStateChanged((user) => {
         setIsSignedIn(!!user);
-        setUid(user.uid);
+        setUid(user ? user.uid : null);
       });
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
   }, []);
