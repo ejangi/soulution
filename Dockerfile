@@ -2,8 +2,6 @@ FROM node:22
 
 WORKDIR /app
 
-ENV CHOKIDAR_USEPOLLING true
-ENV BROWSER none
 ENV PORT 3000
 EXPOSE $PORT
 
@@ -21,4 +19,4 @@ RUN yarn install
 
 COPY src /app/
 
-CMD yarn start
+CMD yarn dev

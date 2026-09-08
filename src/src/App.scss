@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap');
 
 $color-primary: #0085FF;
@@ -132,7 +134,7 @@ body,
 }
 
 h2 {
-  margin: 0 0 $gutter/2 0;
+  margin: 0 0 math.div($gutter, 2) 0;
 }
 
 a:link,
@@ -144,7 +146,7 @@ button,
 input[type=submit] {
   font-size: 12pt;
   font-family: $font-family;
-  padding: ($gutter/2) $gutter;
+  padding: (math.div($gutter, 2)) $gutter;
   color: $color-white;
   background: linear-gradient(180deg, #0085FF 3.95%, #00B2FF 96.04%);
   box-shadow: 0px 3px 8px rgba(0, 133, 255, 0.49);
@@ -198,7 +200,7 @@ input[type=text] {
 
 label.radio {
   margin-bottom: $gutter;
-  padding: $gutter/2;
+  padding: math.div($gutter, 2);
   color: $color-dark-grey;
   font-size: 14pt;
   background: #FFFFFF;
@@ -219,7 +221,7 @@ label.radio {
   }
 
   .label {
-    margin-left: $gutter/2;
+    margin-left: math.div($gutter, 2);
   }
 
   input[type=radio] {
@@ -232,13 +234,13 @@ label.radio {
   border: 1px solid $color-light-grey;
   border-radius: 6px;
   margin: 0 0 $gutter 0;
-  padding: $gutter/2;
+  padding: math.div($gutter, 2);
 }
 
 .hint {
   color: $color-medium-grey;
-  margin-top: $gutter/2;
-  padding: $gutter/2;
+  margin-top: math.div($gutter, 2);
+  padding: math.div($gutter, 2);
 }
 
 .text-array-input {
@@ -329,7 +331,7 @@ label.radio {
 
 .problem {
   margin-bottom: $gutter;
-  padding: ($gutter/2) $gutter;
+  padding: (math.div($gutter, 2)) $gutter;
   cursor: pointer;
   @include raised;
 
@@ -398,7 +400,7 @@ label.radio {
   }
 
   .modal-header {
-    padding: ($gutter/2);
+    padding: (math.div($gutter, 2));
 
     @media (min-width: $width-sm) {
       padding: $gutter;
@@ -406,7 +408,7 @@ label.radio {
   }
 
   .modal-footer {
-    padding: ($gutter/2) $gutter $gutter $gutter;
+    padding: (math.div($gutter, 2)) $gutter $gutter $gutter;
   }
 
   .modal-header {
@@ -530,7 +532,7 @@ button.btn-delete {
     }
 
     .label {
-      margin-right: ($gutter/2);
+      margin-right: (math.div($gutter, 2));
       color: $color-dark-grey;
     }
 
