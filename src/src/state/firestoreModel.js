@@ -1,14 +1,15 @@
-import firebase from '../firebase.config';
+import { Timestamp } from 'firebase/firestore';
+import { db } from '../firebase.config';
 
 export default class FirestoreModel {
     store;
     
     constructor() {
-        this.store = firebase.firestore();
+        this.store = db;
     }
 
     dateToTimestamp(d) {
-        return firebase.firestore.Timestamp.fromDate(d);
+        return Timestamp.fromDate(d);
     }
 
     get problemCollection() {
