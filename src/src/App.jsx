@@ -3,9 +3,8 @@ import ProblemCollection from "./state/problemModel";
 import ProblemsList from "./components/problemsList";
 import ProblemsModal from "./components/problemsModal";
 import ErrorModal from "./components/errorModal";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import FirebaseAuthUI from "./components/FirebaseAuthUI";
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import { auth } from "./firebase.config";
 import "./App.scss";
 import LogoInversed from "./Logo-Inversed.svg";
 
@@ -17,27 +16,40 @@ function App() {
   const [uid, setUid] = useState(null);
   const [error, setError] = useState(null);
 
-  const uiConfig = {
-    // Popup signin flow rather than redirect flow.
-    signInFlow: "popup",
-    // We will display Google auth provider.
-    signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-    callbacks: {
-      // Avoid redirects after sign-in.
-      signInSuccessWithAuthResult: () => false,
-    },
+  const [authReady, setAuthReady] = useState(false);
+  const [signingIn, setSigningIn] = useState(false);
+  const [authError, setAuthError] = useState(null);
+
+  useEffect(() => onAuthStateChanged(auth, (user) => {
+    setIsSignedIn(!!user);
+    setUid(user ? user.uid : null);
+    setAuthReady(true);
+    if (!user) setProblems([]);
+  }), []);
+
+  const signIn = async () => {
+    setAuthError(null);
+    setSigningIn(true);
+    try {
+      await signInWithPopup(auth, new GoogleAuthProvider());
+    } catch (error) {
+      if (error.code !== "auth/popup-closed-by-user") {
+        setAuthError("Could not sign in with Google. Please try again.");
+        console.error(error);
+      }
+    } finally {
+      setSigningIn(false);
+    }
   };
 
-  // Listen to the Firebase Auth state and set the local state.
-  useEffect(() => {
-    const unregisterAuthObserver = firebase
-      .auth()
-      .onAuthStateChanged((user) => {
-        setIsSignedIn(!!user);
-        setUid(user ? user.uid : null);
-      });
-    return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
-  }, []);
+  const logOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      error.description = "During sign out.";
+      setError(error);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -162,15 +174,15 @@ function App() {
 
   return (
     <>
-      {!isSignedIn ? (
+      {!authReady ? null : !isSignedIn ? (
         <div className="App loggedout">
           <header className="header">
             <div className="container">
               <img src={LogoInversed} alt="Soulution" className="logo" />
-              <FirebaseAuthUI
-                uiConfig={uiConfig}
-                firebaseAuth={firebase.auth()}
-              />
+              <button type="button" className="btn" onClick={signIn} disabled={signingIn}>
+                {signingIn ? "Signing in…" : "Sign in with Google"}
+              </button>
+              {authError && <p role="alert">{authError}</p>}
             </div>
           </header>
         </div>
@@ -192,7 +204,7 @@ function App() {
                       className="logout"
                       onClick={(e) => {
                         e.preventDefault();
-                        firebase.auth().signOut();
+                        logOut();
                       }}
                     >
                       Logout
@@ -245,7 +257,7 @@ function App() {
                         className="logout"
                         onClick={(e) => {
                           e.preventDefault();
-                          firebase.auth().signOut();
+                          logOut();
                         }}
                       >
                         Logout
